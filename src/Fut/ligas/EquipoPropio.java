@@ -35,6 +35,7 @@ public class EquipoPropio extends Equipo {
 
         System.out.print("Selecciona un nombre para tu equipo: ");
         this.nombre = sc.nextLine();
+        super.setNombre(this.nombre);
 
         System.out.println("¡Perfecto! Ahora comienza a formar tu plantilla.");
 
@@ -60,12 +61,14 @@ public class EquipoPropio extends Equipo {
 
         for (int i = 0; i < opciones.size(); i++) {
             Jugador j = opciones.get(i);
-            System.out.printf("%d. %s (Media: %.1f)%n", i + 1, j.getNombre(), (double) j.getMedia());
+            System.out.printf("%d. %s (Media: %d | probGol: %.2f)%n", i + 1, j.getNombre(), j.getMedia(), j.getProbGol());
         }
 
         int seleccion = leerEntero(sc, 1, opciones.size());
         Jugador elegido = opciones.get(seleccion - 1);
+        elegido.setEquipo(this.nombre);
         plantilla.add(elegido);
+        super.añadirJugador(elegido);
         jugadoresElegidos.add(elegido);
     }
 

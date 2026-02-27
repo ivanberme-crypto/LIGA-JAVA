@@ -27,16 +27,34 @@ public class Posicion {
 
     public static Posicion valueOf(String nombrePosicion) {
         for (Posicion p : POSICIONES) {
-            if (p == PORTERO && nombrePosicion.equals("PORTERO")) return p;
-            if (p == LATERAL_IZQUIERDO && nombrePosicion.equals("LATERAL_IZQUIERDO")) return p;
-            if (p == LATERAL_DERECHO && nombrePosicion.equals("LATERAL_DERECHO")) return p;
-            if (p == DEFENSA_CENTRAL && (nombrePosicion.equals("DEFENSA_CENTRAL") || nombrePosicion.equals("DEFENSA"))) return p;
-            if (p == MEDIOCENTRO && (nombrePosicion.equals("MEDIOCENTRO") || nombrePosicion.equals("CENTROCAMPISTA"))) return p;
-            if (p == MEDIOCENTRO_DEFENSIVO && (nombrePosicion.equals("MEDIOCENTRO_DEFENSIVO") || nombrePosicion.equals("CENTROCAMPISTA"))) return p;
-            if (p == MEDIOCENTRO_OFENSIVO && (nombrePosicion.equals("MEDIOCENTRO_OFENSIVO") || nombrePosicion.equals("CENTROCAMPISTA"))) return p;
-            if (p == EXTREMO_IZQUIERDO && (nombrePosicion.equals("EXTREMO_IZQUIERDO") || nombrePosicion.equals("DELANTERO"))) return p;
-            if (p == EXTREMO_DERECHO && (nombrePosicion.equals("EXTREMO_DERECHO") || nombrePosicion.equals("DELANTERO"))) return p;
-            if (p == DELANTERO_CENTRAL && (nombrePosicion.equals("DELANTERO_CENTRAL") || nombrePosicion.equals("DELANTERO"))) return p;
+            if (p.posicion.equals(nombrePosicion)) {
+                return p;
+            }
+        }
+        switch (nombrePosicion) {
+            case "PORTERO":
+                return PORTERO;
+            case "LATERAL_IZQUIERDO":
+                return LATERAL_IZQUIERDO;
+            case "LATERAL_DERECHO":
+                return LATERAL_DERECHO;
+            case "DEFENSA_CENTRAL":
+            case "DEFENSA":
+                return DEFENSA_CENTRAL;
+            case "MEDIOCENTRO":
+            case "CENTROCAMPISTA":
+                return MEDIOCENTRO;
+            case "MEDIOCENTRO_DEFENSIVO":
+                return MEDIOCENTRO_DEFENSIVO;
+            case "MEDIOCENTRO_OFENSIVO":
+                return MEDIOCENTRO_OFENSIVO;
+            case "EXTREMO_IZQUIERDO":
+            case "DELANTERO":
+                return EXTREMO_IZQUIERDO;
+            case "EXTREMO_DERECHO":
+                return EXTREMO_DERECHO;
+            case "DELANTERO_CENTRAL":
+                return DELANTERO_CENTRAL;
         }
         throw new IllegalArgumentException("Posición no válida: " + nombrePosicion);
     }
