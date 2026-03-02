@@ -1,4 +1,4 @@
-package Fut.ligas;
+package Fut.equipos;
 
 import Fut.personas.AlmacenJugador;
 import Fut.personas.Jugador;
@@ -16,8 +16,8 @@ public class EquipoPropio extends Equipo {
     private int titulos;
     private final List<Jugador> plantilla;
 
-    public EquipoPropio(String nombre, String entrenador, int titulos) {
-        super(nombre, "", "", entrenador, titulos);
+    public EquipoPropio(String liga, String nombre, String entrenador, int titulos) {
+        super(liga, nombre, "", "", entrenador, titulos);
         this.nombre = nombre;
         this.entrenador = entrenador;
         this.titulos = titulos;
@@ -61,14 +61,15 @@ public class EquipoPropio extends Equipo {
 
         for (int i = 0; i < opciones.size(); i++) {
             Jugador j = opciones.get(i);
-            System.out.printf("%d. %s (Media: %d | probGol: %.2f)%n", i + 1, j.getNombre(), j.getMedia(), j.getProbGol());
+            System.out.printf("%d. %s (Media: %d)%n", i + 1, j.getNombre(), j.getMedia());
         }
 
         int seleccion = leerEntero(sc, 1, opciones.size());
         Jugador elegido = opciones.get(seleccion - 1);
-        elegido.setEquipo(this.nombre);
-        plantilla.add(elegido);
-        super.añadirJugador(elegido);
+        Jugador copia = elegido.clonar();
+        copia.setEquipo(this.nombre);
+        plantilla.add(copia);
+        super.añadirJugador(copia);
         jugadoresElegidos.add(elegido);
     }
 
@@ -118,8 +119,11 @@ public class EquipoPropio extends Equipo {
         return Collections.unmodifiableList(plantilla);
     }
 
-    public String getNombre() { return nombre; }
-    public String getEntrenador() { return entrenador; }
-    public int getTitulos() { return titulos; }
-    public void setTitulos(int titulos) { this.titulos = titulos; }
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getEntrenador() {
+        return entrenador;
+    }
 }

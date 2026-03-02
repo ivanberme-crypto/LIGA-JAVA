@@ -69,19 +69,19 @@ public class AlmacenJugador {
         }
     }
 
-    public Jugador buscarPorNombre(String nombre) {
-        String n = nombre.trim().toLowerCase();
-
-        for (Jugador j : porteros) if (j.getNombre().toLowerCase().equals(n)) return j;
-        for (Jugador j : defensas) if (j.getNombre().toLowerCase().equals(n)) return j;
-        for (Jugador j : medios) if (j.getNombre().toLowerCase().equals(n)) return j;
-        for (Jugador j : delanteros) if (j.getNombre().toLowerCase().equals(n)) return j;
-
-        return null;
+    public ArrayList<Jugador> getPorteros() {
+        return porteros;
     }
 
-    public ArrayList<Jugador> getPorteros() { return porteros; }
-    public ArrayList<Jugador> getDefensas() { return defensas; }
-    public ArrayList<Jugador> getMedios() { return medios; }
-    public ArrayList<Jugador> getDelanteros() { return delanteros; }
+    public ArrayList<Jugador> getDefensas() {
+        return defensas;
+    }
+
+    public ArrayList<Jugador> getMedios() {
+        return medios;
+    }
+
+    public ArrayList<Jugador> getDelanteros() {
+        return delanteros;
+    }
 }
