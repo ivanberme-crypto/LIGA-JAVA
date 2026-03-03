@@ -3,13 +3,11 @@ package Fut.ligas;
 import Fut.equipos.Equipo;
 import Fut.personas.Jugador;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class LigaTerminada {
 
-    private Scanner cs;
     private String nombreLiga;
     private Equipo campeon;
     private List<Equipo> clasificacionFinal;
@@ -66,7 +64,7 @@ public class LigaTerminada {
                     break;
                 case 0:
                     System.out.println("Cerrando el resumen de la temporada... ¡Gracias por jugar!");
-                    return;
+                    break;
 
                 default:
                     System.out.println("Opción no válida.");
@@ -76,6 +74,5 @@ public class LigaTerminada {
         } while (opcion != 0);
 
         System.out.println("Cerrando FutDraft...");
-        cs.close();
     }
 }

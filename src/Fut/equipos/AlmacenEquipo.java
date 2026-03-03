@@ -48,67 +48,6 @@ public class AlmacenEquipo {
         return ligas;
     }
 
-    public static void mostrarSubmenuEquipos(AlmacenEquipo alEquipo, Scanner sc, String ligaSeleccionada) {
-        int seleccion;
-        int ANCHO_INTERIOR = 43;
-        List<Equipo> listaFiltrada = new ArrayList<>();
-
-        for (Equipo e : alEquipo.getEquipos()) {
-            if (e.getNombreLiga().equalsIgnoreCase(ligaSeleccionada)) {
-                listaFiltrada.add(e);
-            }
-        }
-
-        if (listaFiltrada.isEmpty()) {
-            System.out.println(Decoracion.ROJO + "\n[!] No hay equipos en la liga: " + ligaSeleccionada + Decoracion.RESET);
-            return;
-        }
-
-        do {
-            System.out.println("\n\n");
-            System.out.println(Decoracion.CIAN + "╔═══════════════════════════════════════════╗" + Decoracion.RESET);
-            System.out.println(Decoracion.CIAN + "║" + Decoracion.AMARILLO + Decoracion.centrar(ligaSeleccionada.toUpperCase(), ANCHO_INTERIOR) + Decoracion.CIAN + "║" + Decoracion.RESET);
-            System.out.println(Decoracion.CIAN + "╠═══════════════════════════════════════════╣" + Decoracion.RESET);
-            System.out.println(Decoracion.CIAN + "║" + " ".repeat(ANCHO_INTERIOR) + "║" + Decoracion.RESET);
-
-            for (int i = 0; i < listaFiltrada.size(); i++) {
-                System.out.printf(Decoracion.CIAN + "║  " + Decoracion.AMARILLO + "[%02d]" + Decoracion.RESET + " %-35s " + Decoracion.CIAN + "║%n",
-                        (i + 1), listaFiltrada.get(i).getNombre());
-            }
-
-            System.out.println(Decoracion.CIAN + "║" + " ".repeat(ANCHO_INTERIOR) + "║" + Decoracion.RESET);
-            System.out.println(Decoracion.CIAN + "╠═══════════════════════════════════════════╣" + Decoracion.RESET);
-            System.out.printf(Decoracion.CIAN + "║  " + Decoracion.ROJO + "[00]" + Decoracion.RESET + " %-35s " + Decoracion.CIAN + "║%n", "VOLVER ATRAS");
-            System.out.println(Decoracion.CIAN + "╚═══════════════════════════════════════════╝" + Decoracion.RESET);
-            System.out.print(Decoracion.AMARILLO + " >> SELECCIONA UN EQUIPO: " + Decoracion.RESET);
-
-            seleccion = sc.nextInt();
-            sc.nextLine();
-
-            if (seleccion > 0 && seleccion <= listaFiltrada.size()) {
-                Equipo seleccionado = listaFiltrada.get(seleccion - 1);
-
-                System.out.println("\n\n" + Decoracion.VERDE + "  COMPOSICIÓN DE LA PLANTILLA: " + seleccionado.getNombre().toUpperCase() + Decoracion.RESET);
-                System.out.println("  " + "─".repeat(ANCHO_INTERIOR));
-
-                System.out.printf(Decoracion.AMARILLO + "  %-20s | %-10s | %-5s" + Decoracion.RESET + "%n", "NOMBRE", "POS", "MED");
-                System.out.println("  " + "─".repeat(ANCHO_INTERIOR));
-
-                if (seleccionado.getPlantilla().isEmpty()) {
-                    System.out.println("  No hay jugadores cargados en este equipo.");
-                } else {
-                    for (Jugador j : seleccionado.getPlantilla()) {
-                        System.out.printf("  %-20s | %-10s | %-5d%n",
-                                j.getNombre(), j.getPosicion(), j.getMedia());
-                    }
-                }
-                System.out.println("  " + "─".repeat(ANCHO_INTERIOR));
-                System.out.println(Decoracion.AMARILLO + "  Pulse ENTER para continuar..." + Decoracion.RESET);
-                sc.nextLine();
-            }
-        } while (seleccion != 0);
-    }
-
     public static void vincularJugadoresAEquipos(AlmacenEquipo alEquipo, AlmacenJugador alJugador) {
         List<Jugador> todosLosJugadores = new ArrayList<>();
         todosLosJugadores.addAll(alJugador.getPorteros());
@@ -117,13 +56,95 @@ public class AlmacenEquipo {
         todosLosJugadores.addAll(alJugador.getDelanteros());
 
         for (Equipo equipo : alEquipo.getEquipos()) {
+            equipo.getPlantilla().clear();
+
             for (Jugador jugador : todosLosJugadores) {
-                if (jugador.getEquipo().equalsIgnoreCase(equipo.getNombre())) {
+                if (jugador.getEquipo().trim().equalsIgnoreCase(equipo.getNombre().trim())) {
                     equipo.añadirJugador(jugador);
                 }
             }
         }
         alEquipo.organizarEnLigas();
+    }
+
+    public static void mostrarSubmenuEquipos(AlmacenEquipo alEquipo, Scanner sc, String ligaSeleccionada) {
+        int seleccion;
+        int ANCHO_INTERIOR = 43;
+        List<Equipo> listaFiltrada = new ArrayList<>();
+
+        String colorLiga;
+        switch (ligaSeleccionada.toUpperCase()) {
+            case "LALIGA":
+                colorLiga = Decoracion.B_ROJO;
+                break;
+            case "PREMIER LEAGUE":
+                colorLiga = Decoracion.B_AZUL;
+                break;
+            case "BUNDESLIGA":
+                colorLiga = Decoracion.B_AMARILLO;
+                break;
+            case "SERIE A":
+                colorLiga = Decoracion.B_VERDE;
+                break;
+            case "LIGUE 1":
+                colorLiga = Decoracion.B_PURPURA;
+                break;
+            default:
+                colorLiga = Decoracion.B_CIAN;
+                break;
+        }
+
+        for (Equipo e : alEquipo.getEquipos()) {
+            if (e.getNombreLiga().equalsIgnoreCase(ligaSeleccionada)) {
+                listaFiltrada.add(e);
+            }
+        }
+
+        if (listaFiltrada.isEmpty()) {
+            System.out.println("\n" + Decoracion.B_BLANCO + " ERROR: " + Decoracion.RESET +
+                    Decoracion.ROJO + " No hay equipos en la liga: " + ligaSeleccionada + Decoracion.RESET);
+            return;
+        }
+
+        do {
+            System.out.println("\n" + colorLiga + "╔" + "═".repeat(ANCHO_INTERIOR + 2) + "╗" + Decoracion.RESET);
+            System.out.println(colorLiga + "║ " + Decoracion.B_BLANCO +
+                    Decoracion.centrar(" LIGA: " + ligaSeleccionada.toUpperCase() + " ", ANCHO_INTERIOR) +
+                    Decoracion.RESET + colorLiga + " ║");
+            System.out.println(colorLiga + "╠" + "═".repeat(ANCHO_INTERIOR + 2) + "╣" + Decoracion.RESET);
+
+            for (int i = 0; i < listaFiltrada.size(); i++) {
+                String indice = String.format("[%02d]", (i + 1));
+                String nombreEquipo = listaFiltrada.get(i).getNombre();
+
+                System.out.printf(colorLiga + "║  " + Decoracion.B_AMARILLO + "%s" + Decoracion.RESET +
+                                " %-" + (ANCHO_INTERIOR - 6) + "s " + colorLiga + "║%n",
+                        indice, nombreEquipo);
+            }
+
+            System.out.println(colorLiga + "╠" + "═".repeat(ANCHO_INTERIOR + 2) + "╣" + Decoracion.RESET);
+            System.out.printf(colorLiga + "║  " + Decoracion.ROJO + "[00]" + Decoracion.RESET +
+                    " %-" + (ANCHO_INTERIOR - 6) + "s " + colorLiga + "║%n", "VOLVER AL MENÚ PRINCIPAL");
+            System.out.println(colorLiga + "╚" + "═".repeat(ANCHO_INTERIOR + 2) + "╝" + Decoracion.RESET);
+
+            System.out.print(Decoracion.B_AMARILLO + " -> Selecciona un equipo (Presiona 0 para salir): " + Decoracion.RESET);
+
+            while (!sc.hasNextInt()) {
+                sc.next();
+                System.out.print(Decoracion.ROJO + "Entrada no válida. Intenta de nuevo: " + Decoracion.RESET);
+            }
+
+            seleccion = sc.nextInt();
+            sc.nextLine();
+
+            if (seleccion > 0 && seleccion <= listaFiltrada.size()) {
+                Equipo equipoElegido = listaFiltrada.get(seleccion -1);
+                mostrarPlantillaEquipo(equipoElegido, ligaSeleccionada);
+
+                System.out.println("\n" + Decoracion.B_AMARILLO + " [ Presiona ENTER para volver a la lista de equipos ]" + Decoracion.RESET);
+                sc.nextLine();
+            }
+        }while (seleccion != 0);
     }
 
     private void cargarEquiposDesdeTxt(String ruta) {
@@ -159,5 +180,56 @@ public class AlmacenEquipo {
         } catch (Exception e) {
             System.err.println("Error procesando el archivo de equipos: " + e.getMessage());
         }
+    }
+
+    public static void mostrarPlantillaEquipo(Equipo equipo, String ligaSeleccionada) {
+        int ANCHO = 55;
+        String colorLiga;
+        switch (ligaSeleccionada.toUpperCase()) {
+            case "LALIGA":
+                colorLiga = Decoracion.B_ROJO;
+                break;
+            case "PREMIER LEAGUE":
+                colorLiga = Decoracion.B_AZUL;
+                break;
+            case "BUNDESLIGA":
+                colorLiga = Decoracion.B_AMARILLO;
+                break;
+            case "SERIE A":
+                colorLiga = Decoracion.B_VERDE;
+                break;
+            case "LIGUE 1":
+                colorLiga = Decoracion.B_PURPURA;
+                break;
+            default:
+                colorLiga = Decoracion.B_CIAN;
+                break;
+        }
+        System.out.println("\n" + colorLiga + "┌" + "─".repeat(ANCHO) + "┐");
+        String titulo = "PLANTILLA DE " + equipo.getNombre().toUpperCase();
+        System.out.println(colorLiga + "│" + Decoracion.B_BLANCO + Decoracion.centrar(titulo, ANCHO) + colorLiga + "│");
+        System.out.println(colorLiga + "├" + "─".repeat(ANCHO) + "┤");
+
+        List<Jugador> plantilla = equipo.getPlantilla();
+
+        if (plantilla == null || plantilla.isEmpty()) {
+            System.out.println(colorLiga + "│ " + Decoracion.ROJO + Decoracion.centrar(" No hay jugadores registrados para este equipo.",ANCHO)  + colorLiga + " │");
+        } else {
+            for (Jugador j : plantilla) {
+                String colorMedia = (j.getMedia() >= 90) ? Decoracion.B_VERDE :
+                        (j.getMedia() >= 80) ? Decoracion.B_AMARILLO :
+                                (j.getMedia() >= 70) ? Decoracion.B_ROJO : Decoracion.BLANCO;
+
+                String mediaTexto = "MEDIA: " + j.getMedia();
+                System.out.print(colorLiga + "│" + Decoracion.RESET);
+                System.out.printf("   " + colorLiga + "%-5s" + Decoracion.RESET +
+                                " %-26s " + colorMedia + "%-10s" + Decoracion.RESET +
+                                "         ",
+                        j.getPosicion(), j.getNombre(), mediaTexto);
+
+                System.out.println(colorLiga + "│");
+            }
+        }
+        System.out.println(colorLiga + "└" + "─".repeat(ANCHO) + "┘" + Decoracion.RESET);
     }
 }

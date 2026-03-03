@@ -28,7 +28,7 @@ public class AlmacenLiga {
         int ANCHO_INTERIOR = 43;
 
         if (ligasDisponibles.isEmpty()) {
-            System.out.println(Decoracion.ROJO + "\n[!] No hay ligas cargadas en el sistema." + Decoracion.RESET);
+            System.out.println(Decoracion.ROJO + "\n No hay ligas cargadas en el sistema." + Decoracion.RESET);
             return;
         }
 
@@ -72,31 +72,68 @@ public class AlmacenLiga {
 
     public void gestionarSeleccionLiga(Scanner sc) {
         List<Liga> ligasDisponibles = alEquipo.getLigas();
-        System.out.println("\n--- SELECCIONA TU LIGA ---");
+        int ANCHO = 40;
+
+        System.out.println("\n" + Decoracion.B_CIAN + "╔" + "═".repeat(ANCHO + 2) + "╗");
+        System.out.println("║ " + Decoracion.B_BLANCO + Decoracion.centrar(" SELECCIONA LA LIGA ", ANCHO) + Decoracion.B_CIAN + " ║");
+        System.out.println("╠" + "═".repeat(ANCHO + 2) + "╣");
+
         for (int i = 0; i < ligasDisponibles.size(); i++) {
-            System.out.println("  [" + (i + 1) + "] " + ligasDisponibles.get(i).getNombre());
+            String nombreLiga = ligasDisponibles.get(i).getNombre();
+            String colorLiga = obtenerColorPorLiga(nombreLiga);
+
+            System.out.printf(Decoracion.B_CIAN + "║ " + Decoracion.B_AMARILLO + " [%d] " + colorLiga + "%-35s" + Decoracion.B_CIAN + " ║%n",
+                    (i + 1), nombreLiga.toUpperCase());
         }
 
-        System.out.print("Elección: ");
+        System.out.println(Decoracion.B_CIAN + "╚" + "═".repeat(ANCHO + 2) + "╝" + Decoracion.RESET);
+        System.out.print(Decoracion.B_AMARILLO + " -> Seleccion: " + Decoracion.RESET);
+
         int sel = sc.nextInt();
         sc.nextLine();
 
         Liga ligaBase = ligasDisponibles.get(sel - 1);
+        String colorElegido = obtenerColorPorLiga(ligaBase.getNombre());
 
         this.equipoPropio.iniciarFutDraft(alJugador, sc);
         this.equipoPropio.setNombreLiga(ligaBase.getNombre());
 
         List<Equipo> participantes = new ArrayList<>(ligaBase.getEquipos());
-
         participantes.removeIf(e -> e.getNombre().equalsIgnoreCase(equipoPropio.getNombre()));
         participantes.add(equipoPropio);
 
         List<Jornada> calendario = Liga.generarCalendario(participantes);
-
         this.ligaEnCurso = new Liga(ligaBase.getNombre(), participantes, calendario);
 
-        System.out.println("\n¡Todo listo! Suerte en la " + ligaBase.getNombre() + "!");
+        System.out.println("\n" + Decoracion.B_BLANCO + "┌" + "─".repeat(ANCHO) + "┐");
+        System.out.println("│" + Decoracion.centrar("¡CALENDARIO GENERADO!", ANCHO) + "│");
+        System.out.println("└" + "─".repeat(ANCHO) + "┘");
+
+        System.out.println(Decoracion.B_VERDE + " Has ingresado en la " + colorElegido + ligaBase.getNombre().toUpperCase() + Decoracion.RESET);
+        System.out.println(Decoracion.B_CIAN + " ¡Mucha suerte en tu carrera, Míster!" + Decoracion.RESET);
+        System.out.println("\n" + Decoracion.B_AMARILLO + " [ Presiona ENTER para entrar al despacho ] " + Decoracion.RESET);
+        sc.nextLine();
 
         this.ligaEnCurso.menuFutDraft(sc, equipoPropio);
     }
+
+    private String obtenerColorPorLiga(String nombreLiga) {
+        return switch (nombreLiga.toUpperCase()) {
+            case "LALIGA" -> Decoracion.ROJO_ANARANJADO;
+            case "PREMIER LEAGUE" -> Decoracion.B_AZUL;
+            case "BUNDESLIGA" -> Decoracion.B_ROJO;
+            case "SERIE A" -> Decoracion.B_VERDE;
+            case "LIGUE 1" -> Decoracion.B_PURPURA;
+            default -> Decoracion.B_CIAN;
+        };
+    }
+
+    public Liga getLigaEnCurso() {
+        return ligaEnCurso;
+    }
+
+    public void setEquipoPropio(EquipoPropio equipoPropio) {
+        this.equipoPropio = equipoPropio;
+    }
+
 }

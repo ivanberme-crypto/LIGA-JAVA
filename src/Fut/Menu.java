@@ -31,18 +31,21 @@ public class Menu {
         int ANCHO_INTERIOR = 43;
 
         do {
+            boolean plantillaCompleta = equipoPropio.estaCompleta();
             System.out.println("\n\n");
             System.out.println(Decoracion.CIAN + "╔═══════════════════════════════════════════╗" + Decoracion.RESET);
             System.out.println(Decoracion.CIAN + "║" + " ".repeat(ANCHO_INTERIOR) + "║" + Decoracion.RESET);
-
             System.out.println(Decoracion.CIAN + "║" + Decoracion.AMARILLO + Decoracion.centrar("FUTDRAFT XTART", ANCHO_INTERIOR) + Decoracion.CIAN + "║" + Decoracion.RESET);
-
             System.out.println(Decoracion.CIAN + "║" + " ".repeat(ANCHO_INTERIOR) + "║" + Decoracion.RESET);
             System.out.println(Decoracion.CIAN + "╠═══════════════════════════════════════════╣" + Decoracion.RESET);
             System.out.println(Decoracion.CIAN + "║" + " ".repeat(ANCHO_INTERIOR) + "║" + Decoracion.RESET);
-
             System.out.printf(Decoracion.CIAN + "║   " + Decoracion.AMARILLO + "1." + Decoracion.RESET + " %-36s " + Decoracion.CIAN + "║%n", "VER LIGAS Y EQUIPOS");
-            System.out.printf(Decoracion.CIAN + "║   " + Decoracion.AMARILLO + "2." + Decoracion.RESET + " %-36s " + Decoracion.CIAN + "║%n", "COMENZAR NUEVO FUTDRAFT");
+            if (plantillaCompleta) {
+                System.out.printf(Decoracion.CIAN + "║   " + Decoracion.AMARILLO + "2." + Decoracion.RESET + " %-36s " + Decoracion.CIAN + "║%n", "REHACER FUTDRAFT");
+                System.out.printf(Decoracion.CIAN + "║   " + Decoracion.AMARILLO + "3." + Decoracion.RESET + " %-36s " + Decoracion.CIAN + "║%n", "CONTINUAR CON EL FUTDRAFT");
+            } else {
+                System.out.printf(Decoracion.CIAN + "║   " + Decoracion.AMARILLO + "2." + Decoracion.RESET + " %-36s " + Decoracion.CIAN + "║%n", "COMENZAR NUEVO FUTDRAFT");
+            }
             System.out.println(Decoracion.CIAN + "║" + " ".repeat(ANCHO_INTERIOR) + "║" + Decoracion.RESET);
             System.out.printf(Decoracion.CIAN + "║   " + Decoracion.ROJO + "0." + Decoracion.RESET + " %-36s " + Decoracion.CIAN + "║%n", "SALIR DE LA APLICACIÓN");
             System.out.println(Decoracion.CIAN + "║" + " ".repeat(ANCHO_INTERIOR) + "║" + Decoracion.RESET);
@@ -54,13 +57,42 @@ public class Menu {
                 opcionPrincipal = sc.nextInt();
                 sc.nextLine();
                 switch (opcionPrincipal) {
-                    case 1 -> alLiga.mostrarSubMenuLiga(sc);
-                    case 2 -> alLiga.gestionarSeleccionLiga(sc);
-                    case 0 -> System.out.println(Decoracion.VERDE + "¡Gracias por usar FUTDRAFT XTART! ¡Hasta la próxima!" + Decoracion.RESET);
-                    default -> {
-                        System.out.println(Decoracion.ROJO + "Opción no válida. Por favor, selecciona una opción del menú." + Decoracion.RESET);
-                        opcionPrincipal = -1;
-                    }
+                    case 1:
+                        alLiga.mostrarSubMenuLiga(sc);
+                        break;
+
+                    case 2:
+                        if (plantillaCompleta) {
+                            System.out.print(Decoracion.ROJO + "¿Seguro que quieres borrar tu equipo actual? (S/N): " + Decoracion.RESET);
+                            if (sc.nextLine().equalsIgnoreCase("S")) {
+                                this.equipoPropio = new EquipoPropio("", "", "", 0);
+                                alLiga.setEquipoPropio(this.equipoPropio);
+                                alLiga.gestionarSeleccionLiga(sc);
+                            }
+                        } else {
+                            alLiga.gestionarSeleccionLiga(sc);
+                        }
+                        break;
+
+                    case 3:
+                        if (plantillaCompleta) {
+                            if (alLiga.getLigaEnCurso() != null) {
+                                alLiga.getLigaEnCurso().menuFutDraft(sc, equipoPropio);
+                            } else {
+                                System.out.println(Decoracion.ROJO + "Error: No hay una liga activa." + Decoracion.RESET);
+                            }
+                        } else {
+                            System.out.println(Decoracion.ROJO + "Opción bloqueada: Primero debes completar tu equipo." + Decoracion.RESET);
+                        }
+                        break;
+
+                    case 0:
+                        System.out.println(Decoracion.VERDE + "¡Hasta la próxima!" + Decoracion.RESET);
+                        break;
+
+                    default:
+                        System.out.println(Decoracion.ROJO + "Opción no válida." + Decoracion.RESET);
+                        break;
                 }
             } catch (Exception e) {
                 System.out.println(Decoracion.ROJO + "Error: Entrada no válida." + Decoracion.RESET);

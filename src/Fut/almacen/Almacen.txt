@@ -83,7 +83,7 @@ equipos.add(new Equipo("LaLiga", "Elche CF", "Elche", "Martínez Valero", "Eder 
 equipos.add(new Equipo("LaLiga", "Levante UD", "Valencia", "Ciutat de València", "Luis Castro", 1));
 equipos.add(new Equipo("LaLiga", "Real Oviedo", "Oviedo", "Carlos Tartiere", "Guillermo Almada", 0));
 
-porteros.add(new Jugador("J. García", 22, Fut.enumLiga.Posicion.PORTERO, 77, 0.00, "FC Barcelona"));
+porteros.add(new Jugador("J. García", 22, Fut.enumLiga.Posicion.PORTERO, 80, 0.00, "FC Barcelona"));
 defensas.add(new Jugador("Balde", 21, Fut.enumLiga.Posicion.LATERAL_IZQUIERDO, 81, 0.02, "FC Barcelona"));
 defensas.add(new Jugador("E. García", 23, Fut.enumLiga.Posicion.DEFENSA_CENTRAL, 78, 0.02, "FC Barcelona"));
 defensas.add(new Jugador("Cubarsí", 17, Fut.enumLiga.Posicion.DEFENSA_CENTRAL, 72, 0.02, "FC Barcelona"));
@@ -104,7 +104,7 @@ medios.add(new Jugador("Camavinga", 21, Fut.enumLiga.Posicion.MEDIOCENTRO, 85, 0
 medios.add(new Jugador("Tchouaméni", 24, Fut.enumLiga.Posicion.MEDIOCENTRO_DEFENSIVO, 86, 0.04, "Real Madrid CF"));
 medios.add(new Jugador("Valverde", 24, Fut.enumLiga.Posicion.MEDIOCENTRO, 88, 0.08, "Real Madrid CF"));
 delanteros.add(new Jugador("Mastantuono", 22, Fut.enumLiga.Posicion.EXTREMO_DERECHO, 81, 0.12, "Real Madrid CF"));
-delanteros.add(new Jugador("Vinicius Jr.", 25, Fut.enumLiga.Posicion.EXTREMO_IZQUIERDO, 92, 0.18, "Real Madrid CF"));
+delanteros.add(new Jugador("Vinicius", 25, Fut.enumLiga.Posicion.EXTREMO_IZQUIERDO, 92, 0.18, "Real Madrid CF"));
 delanteros.add(new Jugador("G. García", 23, Fut.enumLiga.Posicion.DELANTERO_CENTRAL, 82, 0.13, "Real Madrid CF"));
 
 porteros.add(new Jugador("Oblak", 31, Fut.enumLiga.Posicion.PORTERO, 89, 0.00, "Atlético de Madrid"));

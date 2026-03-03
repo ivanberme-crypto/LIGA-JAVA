@@ -1,5 +1,6 @@
 package Fut.ligas;
 
+import Fut.Decoracion;
 import Fut.equipos.Equipo;
 import Fut.equipos.EquipoPropio;
 import Fut.ligas.jornadas.Jornada;
@@ -7,11 +8,11 @@ import Fut.ligas.jornadas.Partido;
 import Fut.personas.Jugador;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Liga {
     private String nombre;
     private List<Equipo> equipos;
-    private Scanner sc = new Scanner(System.in);
     private List<Jornada> jornadas;
     private int jornadaActual;
 
@@ -20,92 +21,108 @@ public class Liga {
         this.equipos = equipos;
         this.jornadas = jornadas;
         this.jornadaActual = 0;
-        this.sc = new Scanner(System.in);
     }
 
     public void menuFutDraft(Scanner sc, EquipoPropio equipoUsuario) {
-        this.sc = sc;
         int opcion = -1;
+        int ANCHO = 45;
 
         do {
-            System.out.println("\n===== MENU LIGA: " + this.nombre + " =====");
-            System.out.println("1. Ver clasificación");
-            System.out.println("2. Ver jornada actual");
-            System.out.println("3. Iniciar jornada (Jugar)");
-            System.out.println("4. Ver mi equipo");
-            System.out.println("5. Ranking goleadores");
-            System.out.println("0. Salir");
-            System.out.print("Selección: ");
+            System.out.println("\n" + Decoracion.B_AZUL + "╔" + "═".repeat(ANCHO) + "╗");
+
+            System.out.println("║" + Decoracion.B_BLANCO + Decoracion.centrar("MODO LIGA: " + this.nombre.toUpperCase(), ANCHO) + Decoracion.B_AZUL + "║");
+
+            System.out.println("╠" + "═".repeat(ANCHO) + "╣");
+            System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 1. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Ver Clasificación Actual");
+            System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 2. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Ver Próxima Jornada");
+            System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 3. " + Decoracion.B_BLANCO + "%-39s" + Decoracion.B_AZUL + " ║%n", "JUGAR SIGUIENTE JORNADA");
+            System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 4. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Ver Mi Plantilla");
+            System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 5. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Bota de Oro (Goleadores)");
+            System.out.println("╠" + "═".repeat(ANCHO) + "╣");
+            System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_ROJO + " 0. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Salir al Menú Principal");
+            System.out.println("╚" + "═".repeat(ANCHO) + "╝" + Decoracion.RESET);
+            System.out.print(Decoracion.B_AMARILLO + " -> Selección: " + Decoracion.RESET);
 
             try {
                 opcion = sc.nextInt();
                 sc.nextLine();
             } catch (InputMismatchException e) {
-                System.out.println("Error: Introduce un número válido.");
+                System.out.println(Decoracion.ROJO + " Error: Introduce un número válido." + Decoracion.RESET);
                 sc.nextLine();
                 continue;
             }
 
             switch (opcion) {
-                case 1: mostrarClasificacion(); break;
+                case 1: mostrarClasificacion(sc); break;
                 case 2: mostrarJornada(); break;
-                case 3: jugarJornada(); break;
+                case 3: jugarJornada(sc); break;
                 case 4: mostrarEquipoUsuario(equipoUsuario); break;
                 case 5: mostrarGoleadores(); break;
-                case 0: System.out.println("Regresando al menú principal..."); break;
-                default: System.out.println("Opción no válida."); break;
+                case 0: System.out.println(Decoracion.B_ROJO + " Volviendo al menu principal..." + Decoracion.RESET); break;
+                default: System.out.println(Decoracion.ROJO + " Opción no válida." + Decoracion.RESET); break;
             }
         } while (opcion != 0);
     }
 
-    private void mostrarClasificacion() {
-        System.out.println("\n. . . . . . . . . . . . . . . . . . . . . CLASIFICACIÓN . . . . . . . . . . . . . . . . . . . . .");
+    private void mostrarClasificacion(Scanner sc) {
+        int anchoTotal = 69;
+
+        System.out.println("\n" + Decoracion.B_BLANCO + "┌" + "─".repeat(anchoTotal) + "┐");
+        System.out.println("│" + Decoracion.B_AMARILLO + Decoracion.centrar("TABLA DE POSICIONES - " + nombre.toUpperCase(), anchoTotal) + Decoracion.B_BLANCO + "│");
+
+        System.out.println("├" + "─".repeat(27) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┤");
+
+        System.out.printf("│ %-25s │ %3s │ %3s │ %3s │ %3s │ %3s │ %3s │ %3s │%n",
+                "CLUB", "PJ", "V", "E", "D", "GF", "GC", "PTS");
+
+        System.out.println("├" + "─".repeat(27) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┤");
 
         equipos.sort((e1, e2) -> {
             int diffPuntos = Integer.compare(e2.getPuntos(), e1.getPuntos());
             if (diffPuntos != 0) return diffPuntos;
             int dg1 = e1.getGolesFavor() - e1.getGolesContra();
             int dg2 = e2.getGolesFavor() - e2.getGolesContra();
-            if (dg2 != dg1) return Integer.compare(dg2, dg1);
-            return Integer.compare(e2.getGolesFavor(), e1.getGolesFavor());
+            return Integer.compare(dg2, dg1);
         });
-
-        System.out.printf("%-4s %-25s %3s %3s %3s %3s %3s %3s %3s%n",
-                "POS", "EQUIPO", "PTS", "PJ", "PG", "PE", "PP", "GF", "GC");
-        System.out.println("------------------------------------------------------------------------------------------");
 
         for (int i = 0; i < equipos.size(); i++) {
             Equipo e = equipos.get(i);
-            System.out.printf("%-4d %-25s %3d %3d %3d %3d %3d %3d %3d%n",
-                    (i + 1), e.getNombre(), e.getPuntos(), e.getJugados(),
+
+            String colorNombre = (i < 3) ? Decoracion.B_VERDE : (i >= equipos.size() - 3) ? Decoracion.B_ROJO : Decoracion.RESET;
+
+            System.out.printf(Decoracion.B_BLANCO + "│ " + colorNombre + "%-25s" + Decoracion.B_BLANCO + " │ %3d │ %3d │ %3d │ %3d │ %3d │ %3d │ " + Decoracion.B_AMARILLO + "%3d" + Decoracion.B_BLANCO + " │%n",
+                    (i+1+". ")+e.getNombre(), e.getJugados(),
                     e.getGanados(), e.getEmpatados(), e.getPerdidos(),
-                    e.getGolesFavor(), e.getGolesContra());
+                    e.getGolesFavor(), e.getGolesContra(), e.getPuntos());
         }
+
+        System.out.println("└" + "─".repeat(anchoTotal) + "┘" + Decoracion.RESET);
+        System.out.println(Decoracion.B_AMARILLO + " [ Presiona ENTER para volver al menú ]" + Decoracion.RESET);
+        sc.nextLine();
     }
 
     private void mostrarJornada() {
-        if (jornadaActual >= jornadas.size()) {
-            System.out.println("La liga ha finalizado.");
-            return;
-        }
-        System.out.println("\n--- PRÓXIMA JORNADA: " + (jornadaActual + 1) + " de " + jornadas.size() + " ---");
+        System.out.println("\n" + Decoracion.B_BLANCO + "  " + "—".repeat(55));
+        System.out.println(Decoracion.B_AMARILLO + Decoracion.centrar("PARTIDOS - JORNADA " + (jornadaActual + 1), 55));
+        System.out.println(Decoracion.B_BLANCO + "  " + "—".repeat(55) + Decoracion.RESET + "\n");
+
         jornadas.get(jornadaActual).mostrarPartidos();
+
+        System.out.println("\n" + Decoracion.B_BLANCO + "  " + "—".repeat(55) + Decoracion.RESET);
     }
 
-    private void jugarJornada() {
+    private void jugarJornada(Scanner sc) {
         if (jornadaActual < jornadas.size()) {
             jornadas.get(jornadaActual).simular(jornadaActual + 1);
             jornadaActual++;
 
             if (jornadaActual == jornadas.size()) {
-                finLiga();
+                finLiga(sc);
             }
-        } else {
-            System.out.println("La liga ha terminado.");
         }
     }
 
-    private void finLiga() {
+    private void finLiga(Scanner sc) {
         System.out.println("\n¡La competición ha llegado a su fin!");
         equipos.sort((e1, e2) -> Integer.compare(e2.getPuntos(), e1.getPuntos()));
 
@@ -157,18 +174,144 @@ public class Liga {
     }
 
     private void mostrarEquipoUsuario(EquipoPropio eq) {
-        System.out.println("\n--- TU EQUIPO: " + eq.getNombre().toUpperCase() + " ---");
-        eq.getPlantilla().forEach(j -> System.out.printf(" - %s %-20s (Media: %d)%n", j.getPosicion(), j.getNombre(), j.getMedia()));
+        int ANCHO = 55;
+        List<Jugador> plantilla = eq.getPlantilla();
+
+        System.out.println("\n" + Decoracion.B_BLANCO + "  " + "—".repeat(ANCHO));
+        System.out.println(Decoracion.B_AMARILLO + Decoracion.centrar("PLANTILLA 4-3-3: " + eq.getNombre().toUpperCase(), ANCHO));
+        System.out.println(Decoracion.B_BLANCO + "  " + "—".repeat(ANCHO) + Decoracion.RESET);
+
+        List<Jugador> delanteros = plantilla.stream()
+                .filter(j -> j.getPosicion().toString().matches("LW|ST|RW"))
+                .limit(3).collect(Collectors.toCollection(ArrayList::new));
+
+        List<Jugador> medios = plantilla.stream()
+                .filter(j -> j.getPosicion().toString().matches("CDM|CM|CAM"))
+                .limit(3).collect(Collectors.toCollection(ArrayList::new));
+
+        List<Jugador> defensas = plantilla.stream()
+                .filter(j -> j.getPosicion().toString().matches("LB|CB|RB"))
+                .limit(4).collect(Collectors.toCollection(ArrayList::new));
+
+        List<Jugador> porteros = plantilla.stream()
+                .filter(j -> j.getPosicion().toString().equals("GK"))
+                .limit(1).collect(Collectors.toCollection(ArrayList::new));
+
+        defensas.sort(Comparator.comparing(j -> {
+            String pos = j.getPosicion().toString();
+            if (pos.equals("LB")) return 1;
+            if (pos.equals("CB")) return 2;
+            return 3;
+        }));
+
+        medios.sort(Comparator.comparing(j -> {
+            String pos = j.getPosicion().toString();
+            if (pos.equals("CDM") || pos.equals("CAM")) return 2;
+            return 1;
+        }));
+
+        delanteros.sort(Comparator.comparing(j -> {
+            String pos = j.getPosicion().toString();
+            if (pos.equals("LW")) return 1;
+            if (pos.equals("ST")) return 2;
+            return 3;
+        }));
+
+        System.out.println("");
+        imprimirFilaCampo(delanteros, 3);
+        System.out.println("");
+        imprimirFilaCampo(medios, 3);
+        System.out.println("");
+        imprimirFilaCampo(defensas, 4);
+        System.out.println("");
+        imprimirFilaCampo(porteros, 1);
+        System.out.println("\n" + Decoracion.B_BLANCO + "  " + "—".repeat(ANCHO));
+        double media = eq.getMediaEquipo();
+        String colorMed = (media >= 85) ? Decoracion.B_VERDE : (media >= 75) ? Decoracion.B_AMARILLO : Decoracion.B_ROJO;
+        System.out.printf("   " + Decoracion.B_CIAN + "%-30s" + colorMed + "%5.1f" + Decoracion.RESET + "%n",
+                "VALORACIÓN MEDIA DEL ONCE:", media);
+        System.out.println(Decoracion.B_BLANCO + "  " + "—".repeat(ANCHO) + Decoracion.RESET);
+    }
+
+    private void imprimirFilaCampo(List<Jugador> jugadores, int esperado) {
+        StringBuilder filaNombres = new StringBuilder();
+        StringBuilder filaPosiciones = new StringBuilder();
+        int anchoColumna = (esperado == 4) ? 14 : (esperado == 3) ? 18 : 55;
+
+        for (int i = 0; i < esperado; i++) {
+            String nombreTxt = "---";
+            String posTxt = " ";
+
+            if (i < jugadores.size()) {
+                Jugador j = jugadores.get(i);
+                String nombreFull = j.getNombre().trim();
+
+                nombreTxt = nombreFull.contains(" ") ?
+                        nombreFull.substring(nombreFull.lastIndexOf(" ") + 1).toUpperCase() :
+                        nombreFull.toUpperCase();
+
+                if (nombreTxt.length() > anchoColumna - 1) {
+                    nombreTxt = nombreTxt.substring(0, anchoColumna - 3) + ".";
+                }
+
+                posTxt = "[" + j.getPosicion().toString() + "]";
+            }
+
+            filaNombres.append(Decoracion.centrarEnColumna(nombreTxt, anchoColumna));
+            filaPosiciones.append(Decoracion.centrarEnColumna(posTxt, anchoColumna));
+        }
+
+        System.out.println(Decoracion.B_BLANCO + filaNombres.toString() + Decoracion.RESET);
+        System.out.println(filaPosiciones.toString());
     }
 
     private void mostrarGoleadores() {
+        int ANCHO = 60;
         List<Jugador> goleadores = new ArrayList<>();
         equipos.forEach(e -> goleadores.addAll(e.getPlantilla()));
-        goleadores.stream()
+
+        List<Jugador> topGoleadores = goleadores.stream()
                 .filter(j -> j.getGoles() > 0)
                 .sorted(Comparator.comparingInt(Jugador::getGoles).reversed())
                 .limit(10)
-                .forEach(j -> System.out.printf("%-20s | %2d goles | %s%n", j.getNombre(), j.getGoles(), j.getEquipo()));
+                .toList();
+
+        if (topGoleadores.isEmpty()) {
+            System.out.println(Decoracion.ROJO + "\n Aún no hay goles registrados en la liga." + Decoracion.RESET);
+            return;
+        }
+
+        System.out.println("\n" + Decoracion.B_BLANCO + "  " + "—".repeat(ANCHO));
+        System.out.println(Decoracion.B_AMARILLO + Decoracion.centrar(" TABLA DE GOLEADORES - BOTA DE ORO ", ANCHO));
+        System.out.println(Decoracion.B_BLANCO + "  " + "—".repeat(ANCHO) + Decoracion.RESET);
+
+        String fmtGoleador = "  " + Decoracion.B_BLANCO + "%2d. " + Decoracion.RESET + "%s%-22s%s %s %-18s %s %s%2d GOLES%s%n";
+
+        int puesto = 1;
+        for (Jugador j : topGoleadores) {
+            String colorNombre = (puesto == 1) ? Decoracion.B_AMARILLO : Decoracion.RESET;
+            String colorGoles = (puesto == 1) ? Decoracion.B_AMARILLO : Decoracion.NARANJA;
+
+            String nombreEquipo = "F.C.";
+            if (j.getEquipo() != null) {
+                nombreEquipo = j.getEquipo().toString();
+            }
+
+            if (nombreEquipo.length() > 18) {
+                nombreEquipo = nombreEquipo.substring(0, 15) + "...";
+            }
+
+            System.out.printf(fmtGoleador,
+                    puesto,
+                    colorNombre, j.getNombre().toUpperCase(), Decoracion.RESET,
+                    Decoracion.B_CIAN, nombreEquipo, Decoracion.RESET,
+                    colorGoles, j.getGoles(), Decoracion.RESET);
+
+            puesto++;
+            Decoracion.pausa(70);
+        }
+
+        System.out.println(Decoracion.B_BLANCO + "  " + "—".repeat(ANCHO) + Decoracion.RESET);
     }
 
     public String getNombre() { return nombre; }
