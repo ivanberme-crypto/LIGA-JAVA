@@ -103,7 +103,6 @@ public class Liga {
         System.out.println("└" + "─".repeat(anchoTotal) + "┘" + Decoracion.RESET);
         System.out.println(Decoracion.B_AMARILLO + " [ Presiona ENTER para volver al menú ]" + Decoracion.RESET);
         sc.nextLine();
-        sc.nextLine();
     }
 
     private void mostrarJornada() {

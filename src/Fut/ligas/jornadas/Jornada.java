@@ -52,7 +52,6 @@ public class Jornada {
                     p.getGolesVisitante(),
                     p.getEquipoVisitante().getNombre().toUpperCase());
 
-            Decoracion.pausa(100);
         }
         System.out.println("\n" + Decoracion.B_BLANCO + "  " + "—".repeat(55) + Decoracion.RESET);
         System.out.println("");

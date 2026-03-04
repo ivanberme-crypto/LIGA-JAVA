@@ -13,6 +13,7 @@ public class LigaTerminada {
     private Equipo campeon;
     private List<Equipo> clasificacionFinal;
     private List<Jugador> goleadores;
+    private final int ANCHO_GENERAL = 44;
 
     public LigaTerminada(String nombreLiga, Equipo campeon, List<Equipo> clasificacion, List<Jugador> goleadores) {
         this.nombreLiga = nombreLiga;
@@ -22,58 +23,111 @@ public class LigaTerminada {
     }
 
     public void mostrarMenuFinal(Scanner sc) {
+        int opcion = -1;
+        String colorLiga = Decoracion.B_CIAN;
 
-        int opcion;
         do {
-            System.out.println("\n################################################");
-            System.out.println("#              RESUMEN DE TEMPORADA            #");
-            System.out.println("################################################");
-            System.out.println("  [1] Cuadro de Honor (Campeón)");
-            System.out.println("  [2] Clasificación Final Detallada");
-            System.out.println("  [3] Tabla de Goleadores (Pichichi)");
-            System.out.println("  [0] Salir y cerrar programa");
-            System.out.println("------------------------------------------------");
-            System.out.print("-> Selección: ");
+            try {
+                System.out.println("\n" + colorLiga + "╔" + "═".repeat(ANCHO_GENERAL) + "╗");
+                System.out.println("║" + Decoracion.B_AMARILLO + Decoracion.centrar(" RESUMEN DE TEMPORADA: " + nombreLiga.toUpperCase() + " ", ANCHO_GENERAL) + colorLiga + "║");
+                System.out.println("╠" + "═".repeat(ANCHO_GENERAL) + "╣");
+                System.out.println("║" + Decoracion.B_BLANCO + Decoracion.centrar("[01] Cuadro de Honor", ANCHO_GENERAL) + colorLiga + "║");
+                System.out.println("║" + Decoracion.B_BLANCO + Decoracion.centrar("[02] Clasificación Final", ANCHO_GENERAL) + colorLiga + "║");
+                System.out.println("║" + Decoracion.B_BLANCO + Decoracion.centrar("[03] Tabla de Goleadores", ANCHO_GENERAL) + colorLiga + "║");
+                System.out.println("║" + Decoracion.B_ROJO + Decoracion.centrar("[00] Salir y cerrar programa", ANCHO_GENERAL) + colorLiga + "║");
+                System.out.println("╚" + "═".repeat(ANCHO_GENERAL) + "╝" + Decoracion.RESET);
+                System.out.print(Decoracion.B_AMARILLO + " -> Selección: " + Decoracion.RESET);
 
-            opcion = sc.nextInt();
-            sc.nextLine();
+                if (!sc.hasNextInt()) {
+                    System.out.println("\n" + Decoracion.ROJO + Decoracion.centrar("Error: Por favor, introduce un número.", ANCHO_GENERAL) + Decoracion.RESET);
+                    sc.next();
+                    continue;
+                }
 
-            switch (opcion) {
-                case 1:
-                    System.out.println("\n\t+---------------------------------------+");
-                    System.out.println("\t|           CAMPEÓN OFICIAL             |");
-                    System.out.println("\t+---------------------------------------+");
-                    System.out.println("\t  FELICITACIONES A: " + campeon.getNombre().toUpperCase());
-                    System.out.println("\t  Puntos: " + campeon.getPuntos() + " | GF: " + campeon.getGolesFavor());
-                    System.out.println("\t+---------------------------------------+");
-                    break;
-                case 2:
-                    System.out.println("\n====================================================");
-                    System.out.printf("%-5s | %-25s | %-5s%n", "POS", "EQUIPO", "PTS");
-                    System.out.println("====================================================");
-                    for (int i = 0; i < clasificacionFinal.size(); i++) {
-                        Equipo e = clasificacionFinal.get(i);
-                        System.out.printf("[%02d]  | %-25s | %3d pts%n", (i + 1), e.getNombre(), e.getPuntos());
+                opcion = sc.nextInt();
+                sc.nextLine();
+
+                switch (opcion) {
+                    case 1 -> mostrarCuadroHonor();
+                    case 2 -> mostrarClasificacion();
+                    case 3 -> mostrarPichichi();
+                    case 0 -> {
+                        System.out.println("\n" + Decoracion.B_PURPURA + Decoracion.centrar("¡Gracias por jugar a FutDraft!", ANCHO_GENERAL) + Decoracion.RESET);
+                        System.out.println(Decoracion.B_CIAN + Decoracion.centrar(" Cerrando el despacho... ", ANCHO_GENERAL) + Decoracion.RESET);
+                        System.exit(0);
                     }
-                    System.out.println("====================================================");
-                    break;
-                case 3:
-                    System.out.println("\n--- PICHICHI ---");
-                    goleadores.stream().limit(5).forEach(j ->
-                            System.out.println(j.getNombre() + " (" + j.getEquipo() + ") - " + j.getGoles() + " goles")
-                    );
-                    break;
-                case 0:
-                    System.out.println("Cerrando el resumen de la temporada... ¡Gracias por jugar!");
-                    break;
+                    default -> System.out.println("\n" + Decoracion.ROJO + Decoracion.centrar("Opción no válida. Inténtalo de nuevo.", ANCHO_GENERAL) + Decoracion.RESET);
+                }
+                if (opcion != 0) {
+                    System.out.println("\n" + Decoracion.centrar(Decoracion.B_AMARILLO + "[ Presiona ENTER para continuar ]" + Decoracion.RESET, ANCHO_GENERAL));
+                    sc.nextLine();
+                }
 
-                default:
-                    System.out.println("Opción no válida.");
-                    break;
+            } catch (Exception e) {
+                System.out.println("\n" + Decoracion.ROJO + Decoracion.centrar("Ha ocurrido un error inesperado.", ANCHO_GENERAL) + Decoracion.RESET);
+                if (sc.hasNext()) sc.nextLine();
             }
-
         } while (opcion != 0);
+    }
 
-        System.out.println("Cerrando FutDraft...");
+    private void mostrarCuadroHonor() {
+        int ANCHO_CUADRO = 41;
+        System.out.println("\n" + Decoracion.B_AMARILLO + "┌" + "─".repeat(ANCHO_CUADRO) + "┐");
+        System.out.println("│" + Decoracion.B_BLANCO + Decoracion.centrar("CAMPEÓN OFICIAL", ANCHO_CUADRO) + Decoracion.B_AMARILLO + "│");
+        System.out.println("├" + "─".repeat(ANCHO_CUADRO) + "┤");
+        System.out.println("│" + Decoracion.B_VERDE + Decoracion.centrar(campeon.getNombre().toUpperCase(), ANCHO_CUADRO) + Decoracion.B_AMARILLO + "│");
+        String info = "Puntos: " + campeon.getPuntos() + " | GF: " + campeon.getGolesFavor();
+        System.out.println("│" + Decoracion.RESET + Decoracion.centrar(info, ANCHO_CUADRO) + Decoracion.B_AMARILLO + "│");
+        System.out.println("└" + "─".repeat(ANCHO_CUADRO) + "┘" + Decoracion.RESET);
+    }
+
+    private void mostrarClasificacion() {
+        int ancho = 52;
+        String bordeColor = Decoracion.B_BLANCO;
+
+        System.out.println("\n" + bordeColor + "┌" + "─".repeat(ancho - 2) + "┐");
+        System.out.printf(bordeColor + "│ " + Decoracion.B_PURPURA + "%-5s %-30s %-9s" + bordeColor + "   │%n",
+                "POS", "EQUIPO", "PUNTOS");
+
+        System.out.println(bordeColor + "├" + "─".repeat(ancho - 2) + "┤");
+
+        for (int i = 0; i < clasificacionFinal.size(); i++) {
+            Equipo e = clasificacionFinal.get(i);
+            String colorNombre = (e == campeon) ? Decoracion.B_AMARILLO : Decoracion.RESET;
+            System.out.print(bordeColor + "│ " + Decoracion.RESET);
+            System.out.print(Decoracion.B_CIAN + String.format("%02d   ", (i + 1)) + Decoracion.RESET);
+            String nombre = e.getNombre();
+            if (nombre.length() > 30) nombre = nombre.substring(0, 27) + "...";
+            System.out.print(colorNombre + String.format("%-31s", nombre) + Decoracion.RESET);
+            System.out.print(Decoracion.B_VERDE + String.format("%3d pts   ", e.getPuntos()) + Decoracion.RESET);
+            System.out.println(bordeColor + "   │");
+        }
+        System.out.println(bordeColor + "└" + "─".repeat(ancho - 2) + "┘" + Decoracion.RESET);
+    }
+
+    private void mostrarPichichi() {
+        int ANCHO_PICHICHI = 53;
+
+        System.out.println("\n" + Decoracion.NARANJA + "┌" + "─".repeat(ANCHO_PICHICHI) + "┐");
+        System.out.println("│" + Decoracion.B_BLANCO + Decoracion.centrar("TOP 5 GOLEADORES - PICHICHI", ANCHO_PICHICHI) + Decoracion.NARANJA + "│");
+        System.out.println("├" + "─".repeat(ANCHO_PICHICHI) + "┤");
+
+        int ranking = 1;
+        List<Jugador> top5 = goleadores.stream().limit(5).toList();
+
+        for (Jugador j : top5) {
+            String eqNombre = (j.getEquipo() != null) ? j.getEquipo() : "S.E.";
+            if (eqNombre.length() > 18) eqNombre = eqNombre.substring(0, 15) + "...";
+            System.out.print(Decoracion.NARANJA + "│ " + Decoracion.RESET);
+            System.out.printf("%s%-4s%s %-18s %s%-18s%s %s%2d Goles%s",
+                    Decoracion.B_AMARILLO, "[" + ranking + "]", Decoracion.RESET,
+                    j.getNombre(),
+                    Decoracion.B_CIAN, eqNombre, Decoracion.RESET,
+                    Decoracion.B_VERDE, j.getGoles(), Decoracion.RESET
+            );
+            System.out.println(Decoracion.NARANJA + " │");
+            ranking++;
+        }
+        System.out.println(Decoracion.NARANJA + "└" + "─".repeat(ANCHO_PICHICHI) + "┘" + Decoracion.RESET);
     }
 }
