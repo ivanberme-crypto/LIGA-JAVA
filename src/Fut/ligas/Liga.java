@@ -1,6 +1,7 @@
 package Fut.ligas;
 
 import Fut.Decoracion;
+import Fut.equipos.AlmacenEquipo;
 import Fut.equipos.Equipo;
 import Fut.equipos.EquipoPropio;
 import Fut.ligas.jornadas.Jornada;
@@ -15,12 +16,14 @@ public class Liga {
     private List<Equipo> equipos;
     private List<Jornada> jornadas;
     private int jornadaActual;
+    private AlmacenEquipo alEquipo;
 
-    public Liga(String nombre, List<Equipo> equipos, List<Jornada> jornadas) {
+    public Liga(String nombre, List<Equipo> equipos, List<Jornada> jornadas, AlmacenEquipo alEquipo) {
         this.nombre = nombre;
         this.equipos = equipos;
         this.jornadas = jornadas;
         this.jornadaActual = 0;
+        this.alEquipo = alEquipo;
     }
 
     public void menuFutDraft(Scanner sc, EquipoPropio equipoUsuario) {
@@ -39,6 +42,7 @@ public class Liga {
             System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 4. " + Decoracion.B_BLANCO + "%-39s" + Decoracion.B_AZUL + " ║%n", "JUGAR SIGUIENTE JORNADA");
             System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 5. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Ver Mi Plantilla");
             System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 6. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Pichichis de la liga");
+            System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 7. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Ver Equipos y Plantillas");
 
             System.out.println("╠" + "═".repeat(ANCHO) + "╣");
             System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_ROJO + " 0. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Salir al Menú Principal");
@@ -61,6 +65,7 @@ public class Liga {
                 case 4: jugarJornada(sc); break;
                 case 5: mostrarEquipoUsuario(equipoUsuario); break;
                 case 6: mostrarGoleadores(); break;
+                case 7: mostrarEquiposYPlantillas(sc); break;
                 case 0: System.out.println(Decoracion.B_ROJO + " Volviendo al menu principal..." + Decoracion.RESET); break;
                 default: System.out.println(Decoracion.ROJO + " Opción no válida." + Decoracion.RESET); break;
             }
@@ -97,6 +102,7 @@ public class Liga {
 
         System.out.println("└" + "─".repeat(anchoTotal) + "┘" + Decoracion.RESET);
         System.out.println(Decoracion.B_AMARILLO + " [ Presiona ENTER para volver al menú ]" + Decoracion.RESET);
+        sc.nextLine();
         sc.nextLine();
     }
 
@@ -279,6 +285,9 @@ public class Liga {
         System.out.println(Decoracion.B_BLANCO + filaNombres.toString() + Decoracion.RESET);
         System.out.println(filaPosiciones.toString());
     }
+    private void mostrarEquiposYPlantillas(Scanner sc) {
+        this.alEquipo.mostrarSubmenuEquipos(this.alEquipo, sc, this.nombre, true);
+    }
 
     private void mostrarGoleadores() {
         int ANCHO = 60;
@@ -289,10 +298,10 @@ public class Liga {
                 .filter(j -> j.getGoles() > 0)
                 .sorted(Comparator.comparingInt(Jugador::getGoles).reversed())
                 .limit(10)
-                .toList();
+                .collect(Collectors.toList());
 
         if (topGoleadores.isEmpty()) {
-            System.out.println(Decoracion.ROJO + "\n Aún no hay goles registrados en la liga." + Decoracion.RESET);
+            System.out.println(Decoracion.ROJO + "\n Comienza la liga para ver los goleadores." + Decoracion.RESET);
             return;
         }
 
@@ -307,11 +316,13 @@ public class Liga {
             String colorNombre = (puesto == 1) ? Decoracion.B_AMARILLO : Decoracion.RESET;
             String colorGoles = (puesto == 1) ? Decoracion.B_AMARILLO : Decoracion.NARANJA;
 
-            String nombreEquipo = "F.C.";
-            if (j.getEquipo() != null) {
-                nombreEquipo = j.getEquipo().toString();
+            String nombreEquipo = "Sin Equipo";
+            for (Equipo eq : equipos) {
+                if (eq.getPlantilla().contains(j)) {
+                    nombreEquipo = eq.getNombre();
+                    break;
+                }
             }
-
             if (nombreEquipo.length() > 18) {
                 nombreEquipo = nombreEquipo.substring(0, 15) + "...";
             }

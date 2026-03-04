@@ -39,15 +39,15 @@ public class Menu {
             System.out.println(Decoracion.CIAN + "║" + " ".repeat(ANCHO_INTERIOR) + "║" + Decoracion.RESET);
             System.out.println(Decoracion.CIAN + "╠═══════════════════════════════════════════╣" + Decoracion.RESET);
             System.out.println(Decoracion.CIAN + "║" + " ".repeat(ANCHO_INTERIOR) + "║" + Decoracion.RESET);
-            System.out.printf(Decoracion.CIAN + "║   " + Decoracion.AMARILLO + "1." + Decoracion.RESET + " %-36s " + Decoracion.CIAN + "║%n", "VER LIGAS Y EQUIPOS");
+            System.out.printf(Decoracion.CIAN + "║   " + Decoracion.AMARILLO + "[01]" + Decoracion.RESET + " %-34s " + Decoracion.CIAN + "║%n", "VER LIGAS Y EQUIPOS");
             if (plantillaCompleta) {
-                System.out.printf(Decoracion.CIAN + "║   " + Decoracion.AMARILLO + "2." + Decoracion.RESET + " %-36s " + Decoracion.CIAN + "║%n", "REHACER FUTDRAFT");
-                System.out.printf(Decoracion.CIAN + "║   " + Decoracion.AMARILLO + "3." + Decoracion.RESET + " %-36s " + Decoracion.CIAN + "║%n", "CONTINUAR CON EL FUTDRAFT");
+                System.out.printf(Decoracion.CIAN + "║   " + Decoracion.AMARILLO + "[02]" + Decoracion.RESET + " %-34s " + Decoracion.CIAN + "║%n", "REHACER FUTDRAFT");
+                System.out.printf(Decoracion.CIAN + "║   " + Decoracion.AMARILLO + "[03]" + Decoracion.RESET + " %-34s " + Decoracion.CIAN + "║%n", "CONTINUAR CON EL FUTDRAFT");
             } else {
-                System.out.printf(Decoracion.CIAN + "║   " + Decoracion.AMARILLO + "2." + Decoracion.RESET + " %-36s " + Decoracion.CIAN + "║%n", "COMENZAR NUEVO FUTDRAFT");
+                System.out.printf(Decoracion.CIAN + "║   " + Decoracion.AMARILLO + "[02]" + Decoracion.RESET + " %-34s " + Decoracion.CIAN + "║%n", "COMENZAR NUEVO FUTDRAFT");
             }
             System.out.println(Decoracion.CIAN + "║" + " ".repeat(ANCHO_INTERIOR) + "║" + Decoracion.RESET);
-            System.out.printf(Decoracion.CIAN + "║   " + Decoracion.ROJO + "0." + Decoracion.RESET + " %-36s " + Decoracion.CIAN + "║%n", "SALIR DE LA APLICACIÓN");
+            System.out.printf(Decoracion.CIAN + "║   " + Decoracion.ROJO + "[00]" + Decoracion.RESET + " %-34s " + Decoracion.CIAN + "║%n", "SALIR DE LA APLICACIÓN");
             System.out.println(Decoracion.CIAN + "║" + " ".repeat(ANCHO_INTERIOR) + "║" + Decoracion.RESET);
 
             System.out.println(Decoracion.CIAN + "╚═══════════════════════════════════════════╝" + Decoracion.RESET);

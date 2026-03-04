@@ -11,6 +11,8 @@ public class Jugador extends Persona {
     private int rojas;
     private int goles;
     private String equipo;
+    private boolean sancionado = false;
+    private static final int LIMITE_AMARILLAS = 5;
 
     public Jugador(String nombre, int edad, Posicion posicion, int media, double probGol, String equipo) {
         super(nombre, edad);
@@ -20,63 +22,47 @@ public class Jugador extends Persona {
         this.equipo = equipo;
     }
 
-    public Posicion getPosicion() {
-
-        return posicion;
+    public void amarilla() {
+        this.amarillas++;
+        if (this.amarillas >= LIMITE_AMARILLAS) {
+            this.sancionado = true;
+        }
     }
 
-    public int getMedia() {
-
-        return media;
+    public void roja() {
+        this.rojas++;
+        this.sancionado = true;
+    }
+    public boolean isSancionado() {
+        return sancionado;
     }
 
-    public double getProbGol() {
-
-        return probGol;
-    }
-
-    public int getAmarillas() {
-        return amarillas;
-    }
-
-    public void setAmarillas(int amarillas) {
-        this.amarillas = amarillas;
-    }
-
-    public int getRojas() {
-        return rojas;
-    }
-
-    public void setRojas(int rojas) {
-        this.rojas = rojas;
-    }
-
-    public int getGoles() {
-        return goles;
-    }
-
-    public String getEquipo() {
-        return equipo;
-    }
-
-    public void setEquipo(String equipo) {
-        this.equipo = equipo;
+    public void cumplirSancion() {
+        this.sancionado = false;
+        this.amarillas = 0;
     }
 
     public void marcarGol(){ goles++; }
-    public void amarilla(){ amarillas++; }
-    public void roja(){ rojas++; }
 
     public Jugador clonar() {
         Jugador copia = new Jugador(this.getNombre(), this.getEdad(), this.posicion, this.media, this.probGol, this.equipo);
         return copia;
     }
 
+    public Posicion getPosicion() { return posicion; }
+    public int getMedia() { return media; }
+    public double getProbGol() { return probGol; }
+    public int getAmarillas() { return amarillas; }
+    public int getGoles() { return goles; }
+    public String getEquipo() { return equipo; }
+    public void setEquipo(String equipo) { this.equipo = equipo; }
+
     @Override
     public String toString(){
         return getNombre() + " | " + posicion + " | " + equipo +
                 " | Media: " + media +
-                " | Goles: " + goles;
+                " | Goles: " + goles +
+                (sancionado ? " [SANCIONADO]" : "");
     }
 
 }
