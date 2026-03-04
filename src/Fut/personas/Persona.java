@@ -1,6 +1,6 @@
 package Fut.personas;
 
-public class Persona {
+public abstract class Persona {
 
     protected String nombre;
     protected int edad;

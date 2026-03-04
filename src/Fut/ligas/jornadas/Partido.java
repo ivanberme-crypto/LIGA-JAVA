@@ -5,7 +5,7 @@ import Fut.personas.Jugador;
 import java.util.List;
 import java.util.Random;
 
-public class Partido {
+public final class Partido {
     private Equipo equipoLocal;
     private Equipo equipoVisitante;
     private int golesLocal;

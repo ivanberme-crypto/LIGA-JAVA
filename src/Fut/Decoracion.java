@@ -1,6 +1,10 @@
 package Fut;
 
-public class Decoracion {
+import java.util.Scanner;
+
+public final class Decoracion {
+
+    Scanner sc = new Scanner(System.in);
     public static final String RESET = "\u001B[0m";
     public static final String ROJO = "\u001B[31m";
     public static final String VERDE = "\u001B[32m";
@@ -50,5 +54,29 @@ public class Decoracion {
         int espaciosDerecha = espaciosTotales - espaciosIzquierda;
 
         return " ".repeat(espaciosIzquierda) + texto + " ".repeat(espaciosDerecha);
+    }
+
+    public static int leerEntero(Scanner sc, String mensaje, int min, int max) {
+        int valor;
+        while (true) {
+            System.out.print(mensaje);
+            try {
+                if (sc.hasNextInt()) {
+                    valor = sc.nextInt();
+                    sc.nextLine();
+                    if (valor >= min && valor <= max) {
+                        return valor;
+                    } else {
+                        System.out.println(ROJO + "Error: El número debe estar entre " + min + " y " + max + "." + RESET);
+                    }
+                } else {
+                    System.out.println(ROJO + "Error: Debes introducir un número entero." + RESET);
+                    sc.next();
+                }
+            } catch (Exception e) {
+                System.out.println(ROJO + "Error inesperado al leer datos." + RESET);
+                sc.nextLine();
+            }
+        }
     }
 }

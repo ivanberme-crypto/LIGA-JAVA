@@ -51,11 +51,9 @@ public class Menu {
             System.out.println(Decoracion.CIAN + "║" + " ".repeat(ANCHO_INTERIOR) + "║" + Decoracion.RESET);
 
             System.out.println(Decoracion.CIAN + "╚═══════════════════════════════════════════╝" + Decoracion.RESET);
-            System.out.print(Decoracion.AMARILLO + " -> SELECCIONA UNA OPCION: " + Decoracion.RESET);
 
             try {
-                opcionPrincipal = sc.nextInt();
-                sc.nextLine();
+                opcionPrincipal = Decoracion.leerEntero(sc,Decoracion.AMARILLO + "-> SELECCIONA UNA OPCION: " + Decoracion.RESET, 0, 3);
                 switch (opcionPrincipal) {
                     case 1:
                         alLiga.mostrarSubMenuLiga(sc);

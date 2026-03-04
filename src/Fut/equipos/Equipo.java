@@ -56,6 +56,10 @@ public class Equipo {
         }
     }
 
+    public int diferenciaGoles() {
+        return golesFavor - golesContra;
+    }
+
     public String getNombre() { return nombre; }
     
     public void setNombre(String nombre) { this.nombre = nombre; }
@@ -86,4 +90,6 @@ public class Equipo {
 
     public void setNombreLiga(String ligaSeleccionada) {
     }
+
+
 }

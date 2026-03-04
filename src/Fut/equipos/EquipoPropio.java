@@ -39,6 +39,7 @@ public class EquipoPropio extends Equipo {
         this.nombre = sc.nextLine();
         super.setNombre(this.nombre);
 
+
         System.out.println("\n" + Decoracion.B_AMARILLO + " Preparando el terreno de juego... Comienza el Draft." + Decoracion.RESET);
         Posicion[] esquema = {
                 Posicion.PORTERO,

@@ -34,10 +34,12 @@ public class Liga {
 
             System.out.println("╠" + "═".repeat(ANCHO) + "╣");
             System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 1. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Ver Clasificación Actual");
-            System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 2. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Ver Próxima Jornada");
-            System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 3. " + Decoracion.B_BLANCO + "%-39s" + Decoracion.B_AZUL + " ║%n", "JUGAR SIGUIENTE JORNADA");
-            System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 4. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Ver Mi Plantilla");
-            System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 5. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Bota de Oro (Goleadores)");
+            System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 2. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Ver Calendario Completo");
+            System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 3. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Ver Próxima Jornada");
+            System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 4. " + Decoracion.B_BLANCO + "%-39s" + Decoracion.B_AZUL + " ║%n", "JUGAR SIGUIENTE JORNADA");
+            System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 5. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Ver Mi Plantilla");
+            System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_CIAN + " 6. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Pichichis de la liga");
+
             System.out.println("╠" + "═".repeat(ANCHO) + "╣");
             System.out.printf(Decoracion.B_AZUL + "║ " + Decoracion.B_ROJO + " 0. " + Decoracion.RESET + "%-39s" + Decoracion.B_AZUL + " ║%n", "Salir al Menú Principal");
             System.out.println("╚" + "═".repeat(ANCHO) + "╝" + Decoracion.RESET);
@@ -54,10 +56,11 @@ public class Liga {
 
             switch (opcion) {
                 case 1: mostrarClasificacion(sc); break;
-                case 2: mostrarJornada(); break;
-                case 3: jugarJornada(sc); break;
-                case 4: mostrarEquipoUsuario(equipoUsuario); break;
-                case 5: mostrarGoleadores(); break;
+                case 2: verCalendarioCompleto(); break;
+                case 3: mostrarJornada(); break;
+                case 4: jugarJornada(sc); break;
+                case 5: mostrarEquipoUsuario(equipoUsuario); break;
+                case 6: mostrarGoleadores(); break;
                 case 0: System.out.println(Decoracion.B_ROJO + " Volviendo al menu principal..." + Decoracion.RESET); break;
                 default: System.out.println(Decoracion.ROJO + " Opción no válida." + Decoracion.RESET); break;
             }
@@ -65,24 +68,20 @@ public class Liga {
     }
 
     private void mostrarClasificacion(Scanner sc) {
-        int anchoTotal = 69;
+        int anchoTotal = 75;
 
         System.out.println("\n" + Decoracion.B_BLANCO + "┌" + "─".repeat(anchoTotal) + "┐");
         System.out.println("│" + Decoracion.B_AMARILLO + Decoracion.centrar("TABLA DE POSICIONES - " + nombre.toUpperCase(), anchoTotal) + Decoracion.B_BLANCO + "│");
 
-        System.out.println("├" + "─".repeat(27) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┤");
+        System.out.println("├" + "─".repeat(27) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┬" + "─".repeat(5) + "┤");
+        System.out.printf("│ %-25s │ %3s │ %3s │ %3s │ %3s │ %3s │ %3s │ %3s │ %3s │%n",
+                "CLUB", "PJ", "V", "E", "D", "GF", "GC", "DG", "PTS");
 
-        System.out.printf("│ %-25s │ %3s │ %3s │ %3s │ %3s │ %3s │ %3s │ %3s │%n",
-                "CLUB", "PJ", "V", "E", "D", "GF", "GC", "PTS");
-
-        System.out.println("├" + "─".repeat(27) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┤");
-
+        System.out.println("├" + "─".repeat(27) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┼" + "─".repeat(5) + "┤");
         equipos.sort((e1, e2) -> {
             int diffPuntos = Integer.compare(e2.getPuntos(), e1.getPuntos());
             if (diffPuntos != 0) return diffPuntos;
-            int dg1 = e1.getGolesFavor() - e1.getGolesContra();
-            int dg2 = e2.getGolesFavor() - e2.getGolesContra();
-            return Integer.compare(dg2, dg1);
+            return Integer.compare(e2.diferenciaGoles(), e1.diferenciaGoles());
         });
 
         for (int i = 0; i < equipos.size(); i++) {
@@ -90,10 +89,10 @@ public class Liga {
 
             String colorNombre = (i < 3) ? Decoracion.B_VERDE : (i >= equipos.size() - 3) ? Decoracion.B_ROJO : Decoracion.RESET;
 
-            System.out.printf(Decoracion.B_BLANCO + "│ " + colorNombre + "%-25s" + Decoracion.B_BLANCO + " │ %3d │ %3d │ %3d │ %3d │ %3d │ %3d │ " + Decoracion.B_AMARILLO + "%3d" + Decoracion.B_BLANCO + " │%n",
-                    (i+1+". ")+e.getNombre(), e.getJugados(),
+            System.out.printf(Decoracion.B_BLANCO + "│ " + colorNombre + "%-25s" + Decoracion.B_BLANCO + " │ %3d │ %3d │ %3d │ %3d │ %3d │ %3d │ %3d │ " + Decoracion.B_AMARILLO + "%3d" + Decoracion.B_BLANCO + " │%n",
+                    ((i+1)+". ")+e.getNombre(), e.getJugados(),
                     e.getGanados(), e.getEmpatados(), e.getPerdidos(),
-                    e.getGolesFavor(), e.getGolesContra(), e.getPuntos());
+                    e.getGolesFavor(), e.getGolesContra(), e.diferenciaGoles(), e.getPuntos());
         }
 
         System.out.println("└" + "─".repeat(anchoTotal) + "┘" + Decoracion.RESET);
@@ -171,6 +170,22 @@ public class Liga {
             calendarioCompleto.add(vuelta);
         }
         return calendarioCompleto;
+    }
+
+    public void verCalendarioCompleto() {
+        System.out.println("\n" + Decoracion.B_CIAN + "╔" + "═".repeat(55) + "╗");
+        System.out.println("║" + Decoracion.centrar("CALENDARIO COMPLETO: " + this.nombre.toUpperCase(), 55) + "║");
+        System.out.println("╚" + "═".repeat(55) + "╝" + Decoracion.RESET);
+        if (jornadas == null || jornadas.isEmpty()) {
+            System.out.println(Decoracion.ROJO + "  No hay jornadas generadas todavía." + Decoracion.RESET);
+            return;
+        }
+        for (int i = 0; i < jornadas.size(); i++) {
+            System.out.println("\n" + Decoracion.B_AMARILLO + " JORNADA Nº" + (i + 1) + Decoracion.RESET);
+            System.out.println("  " + "─".repeat(53));
+            jornadas.get(i).mostrarPartidos();
+        }
+        System.out.println("\n" + Decoracion.B_CIAN + " [ Fin del calendario ] " + Decoracion.RESET);
     }
 
     private void mostrarEquipoUsuario(EquipoPropio eq) {

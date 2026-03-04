@@ -309,3 +309,4 @@ medios.add(new Jugador("Luismi Cruz", 23, Fut.enumLiga.Posicion.MEDIOCENTRO_OFEN
 delanteros.add(new Jugador("Borja Bastón", 31, Fut.enumLiga.Posicion.DELANTERO_CENTRAL, 76, 0.03, "Real Oviedo"));
 delanteros.add(new Jugador("Toché", 35, Fut.enumLiga.Posicion.DELANTERO_CENTRAL, 75, 0.02, "Real Oviedo"));
 delanteros.add(new Jugador("Seasane", 25, Fut.enumLiga.Posicion.EXTREMO_DERECHO, 74, 0.01, "Real Oviedo"));
+
