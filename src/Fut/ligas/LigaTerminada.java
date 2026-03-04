@@ -2,6 +2,7 @@ package Fut.ligas;
 
 import Fut.equipos.Equipo;
 import Fut.personas.Jugador;
+import Fut.Decoracion;
 
 import java.util.List;
 import java.util.Scanner;
