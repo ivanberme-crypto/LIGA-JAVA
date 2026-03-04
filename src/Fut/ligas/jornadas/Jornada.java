@@ -3,6 +3,8 @@ package Fut.ligas.jornadas;
 import java.util.ArrayList;
 import java.util.List;
 import Fut.Decoracion;
+import Fut.equipos.Equipo;
+import Fut.personas.Jugador;
 
 public class Jornada {
     private List<Partido> partidos;
@@ -33,6 +35,11 @@ public class Jornada {
         System.out.println(Decoracion.B_BLANCO + "  " + "—".repeat(55) + Decoracion.RESET + "\n");
 
         for (Partido p : partidos) {
+            limpiarSancionadosPasados(p.getEquipoLocal());
+            limpiarSancionadosPasados(p.getEquipoVisitante());
+        }
+
+        for (Partido p : partidos) {
             p.jugarPartido();
             p.getEquipoLocal().registrarResultado(p.getGolesLocal(), p.getGolesVisitante());
             p.getEquipoVisitante().registrarResultado(p.getGolesVisitante(), p.getGolesLocal());
@@ -47,10 +54,17 @@ public class Jornada {
 
             Decoracion.pausa(100);
         }
-
         System.out.println("\n" + Decoracion.B_BLANCO + "  " + "—".repeat(55) + Decoracion.RESET);
         System.out.println("");
         System.out.println(Decoracion.B_VERDE + Decoracion.centrar("JORNADA COMPLETADA", 55) + Decoracion.RESET);
+    }
+
+    private void limpiarSancionadosPasados(Equipo e) {
+        for (Jugador j : e.getPlantilla()) {
+            if (j.isSancionado()) {
+                j.cumplirSancion();
+            }
+        }
     }
 
     public List<Partido> getPartidos() {
