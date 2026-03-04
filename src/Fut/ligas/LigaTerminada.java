@@ -33,7 +33,7 @@ public class LigaTerminada {
             System.out.println("  [3] Tabla de Goleadores (Pichichi)");
             System.out.println("  [0] Salir y cerrar programa");
             System.out.println("------------------------------------------------");
-            System.out.print(">> Selección: ");
+            System.out.print("-> Selección: ");
 
             opcion = sc.nextInt();
             sc.nextLine();
