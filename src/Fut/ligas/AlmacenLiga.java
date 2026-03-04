@@ -40,9 +40,11 @@ public class AlmacenLiga {
             System.out.println(Decoracion.CIAN + "╠═══════════════════════════════════════════╣" + Decoracion.RESET);
             System.out.println(Decoracion.CIAN + "║" + " ".repeat(ANCHO_INTERIOR) + "║" + Decoracion.RESET);
             for (int i = 0; i < ligasDisponibles.size(); i++) {
-                String nombreLiga = ligasDisponibles.get(i).getNombre().toUpperCase();
-                System.out.printf(Decoracion.CIAN + "║  " + Decoracion.AMARILLO + "[%02d]" + Decoracion.RESET + " %-35s " + Decoracion.CIAN + "║%n",
-                        (i + 1), nombreLiga);
+                String nombreLiga = ligasDisponibles.get(i).getNombre();
+                String colorLiga = obtenerColorPorLiga(nombreLiga);
+
+                System.out.printf(Decoracion.B_CIAN + "║ " + Decoracion.B_AMARILLO + " [0%d] " + colorLiga + "%-35s" + Decoracion.B_CIAN + " ║%n",
+                        (i + 1), nombreLiga.toUpperCase());
             }
             System.out.println(Decoracion.CIAN + "║" + " ".repeat(ANCHO_INTERIOR) + "║" + Decoracion.RESET);
             System.out.println(Decoracion.CIAN + "╠═══════════════════════════════════════════╣" + Decoracion.RESET);
@@ -59,7 +61,7 @@ public class AlmacenLiga {
                     volver = true;
                 } else if (opcion > 0 && opcion <= ligasDisponibles.size()) {
                     Liga seleccionada = ligasDisponibles.get(opcion - 1);
-                    AlmacenEquipo.mostrarSubmenuEquipos(alEquipo, sc, seleccionada.getNombre());
+                    alEquipo.mostrarSubmenuEquipos(alEquipo, sc, seleccionada.getNombre(), false);
                 } else {
                     System.out.println(Decoracion.ROJO + "Opción no válida." + Decoracion.RESET);
                 }
@@ -82,7 +84,7 @@ public class AlmacenLiga {
             String nombreLiga = ligasDisponibles.get(i).getNombre();
             String colorLiga = obtenerColorPorLiga(nombreLiga);
 
-            System.out.printf(Decoracion.B_CIAN + "║ " + Decoracion.B_AMARILLO + " [%d] " + colorLiga + "%-35s" + Decoracion.B_CIAN + " ║%n",
+            System.out.printf(Decoracion.B_CIAN + "║ " + Decoracion.B_AMARILLO + " [0%d] " + colorLiga + "%-34s" + Decoracion.B_CIAN + " ║%n",
                     (i + 1), nombreLiga.toUpperCase());
         }
 
@@ -91,6 +93,11 @@ public class AlmacenLiga {
 
         int sel = sc.nextInt();
         sc.nextLine();
+
+        if (sel < 1 || sel > ligasDisponibles.size()) {
+            System.out.println(Decoracion.ROJO + "Selección no válida." + Decoracion.RESET);
+            return;
+        }
 
         Liga ligaBase = ligasDisponibles.get(sel - 1);
         String colorElegido = obtenerColorPorLiga(ligaBase.getNombre());
@@ -103,7 +110,7 @@ public class AlmacenLiga {
         participantes.add(equipoPropio);
 
         List<Jornada> calendario = Liga.generarCalendario(participantes);
-        this.ligaEnCurso = new Liga(ligaBase.getNombre(), participantes, calendario);
+        this.ligaEnCurso = new Liga(ligaBase.getNombre(), participantes, calendario, this.alEquipo);
 
         System.out.println("\n" + Decoracion.B_BLANCO + "┌" + "─".repeat(ANCHO) + "┐");
         System.out.println("│" + Decoracion.centrar("¡CALENDARIO GENERADO!", ANCHO) + "│");

@@ -11,7 +11,6 @@ import java.io.FileReader;
 import java.util.Scanner;
 
 public class AlmacenEquipo {
-
     private List<Equipo> todosLosEquipos;
     private List<Liga> ligas;
 
@@ -33,7 +32,7 @@ public class AlmacenEquipo {
             }
 
             if (ligaEncontrada == null) {
-                ligaEncontrada = new Liga(e.getNombreLiga(), new ArrayList<>(), new ArrayList<>());
+                ligaEncontrada = new Liga(e.getNombreLiga(), new ArrayList<>(), new ArrayList<>(), this);
                 ligas.add(ligaEncontrada);
             }
             ligaEncontrada.agregarEquipo(e);
@@ -67,7 +66,7 @@ public class AlmacenEquipo {
         alEquipo.organizarEnLigas();
     }
 
-    public static void mostrarSubmenuEquipos(AlmacenEquipo alEquipo, Scanner sc, String ligaSeleccionada) {
+    public void mostrarSubmenuEquipos(AlmacenEquipo alEquipo, Scanner sc, String ligaSeleccionada, boolean desdeLiga) {
         int seleccion;
         int ANCHO_INTERIOR = 43;
         List<Equipo> listaFiltrada = new ArrayList<>();
@@ -101,8 +100,8 @@ public class AlmacenEquipo {
         }
 
         if (listaFiltrada.isEmpty()) {
-            System.out.println("\n" + Decoracion.B_BLANCO + " ERROR: " + Decoracion.RESET +
-                    Decoracion.ROJO + " No hay equipos en la liga: " + ligaSeleccionada + Decoracion.RESET);
+            System.out.println("\n" + Decoracion.B_BLANCO + "ERROR: " + Decoracion.RESET +
+                    Decoracion.ROJO + "No hay equipos en la liga: " + ligaSeleccionada + Decoracion.RESET);
             return;
         }
 
@@ -123,10 +122,10 @@ public class AlmacenEquipo {
             }
 
             System.out.println(colorLiga + "╠" + "═".repeat(ANCHO_INTERIOR + 2) + "╣" + Decoracion.RESET);
+            String textoSalir = desdeLiga ? "VOLVER AL MENÚ LIGA FUTDRAFT" : "VOLVER AL MENÚ LIGAS DISPONIBLES";
             System.out.printf(colorLiga + "║  " + Decoracion.ROJO + "[00]" + Decoracion.RESET +
-                    " %-" + (ANCHO_INTERIOR - 6) + "s " + colorLiga + "║%n", "VOLVER AL MENÚ PRINCIPAL");
+                    " %-" + (ANCHO_INTERIOR - 6) + "s " + colorLiga + "║%n", textoSalir);
             System.out.println(colorLiga + "╚" + "═".repeat(ANCHO_INTERIOR + 2) + "╝" + Decoracion.RESET);
-
             System.out.print(Decoracion.B_AMARILLO + " -> Selecciona un equipo (Presiona 0 para salir): " + Decoracion.RESET);
 
             while (!sc.hasNextInt()) {
@@ -141,7 +140,7 @@ public class AlmacenEquipo {
                 Equipo equipoElegido = listaFiltrada.get(seleccion -1);
                 mostrarPlantillaEquipo(equipoElegido, ligaSeleccionada);
 
-                System.out.println("\n" + Decoracion.B_AMARILLO + " [ Presiona ENTER para volver a la lista de equipos ]" + Decoracion.RESET);
+                System.out.println("\n" + Decoracion.B_AMARILLO + "[ Presiona ENTER para volver a la lista de equipos ]" + Decoracion.RESET);
                 sc.nextLine();
             }
         }while (seleccion != 0);
@@ -178,11 +177,11 @@ public class AlmacenEquipo {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Error procesando el archivo de equipos: " + e.getMessage());
+            System.err.println("Error al leer la informacion de los equipos: " + e.getMessage());
         }
     }
 
-    public static void mostrarPlantillaEquipo(Equipo equipo, String ligaSeleccionada) {
+    public void mostrarPlantillaEquipo(Equipo equipo, String ligaSeleccionada) {
         int ANCHO = 55;
         String colorLiga;
         switch (ligaSeleccionada.toUpperCase()) {
@@ -213,19 +212,24 @@ public class AlmacenEquipo {
         List<Jugador> plantilla = equipo.getPlantilla();
 
         if (plantilla == null || plantilla.isEmpty()) {
-            System.out.println(colorLiga + "│ " + Decoracion.ROJO + Decoracion.centrar(" No hay jugadores registrados para este equipo.",ANCHO)  + colorLiga + " │");
+            System.out.println(colorLiga + "│" + Decoracion.ROJO + Decoracion.centrar(" No hay jugadores registrados en este equipo.",ANCHO)  + colorLiga + "│");
         } else {
             for (Jugador j : plantilla) {
+                String colorEstado = Decoracion.RESET;
+                if (j.isSancionado()) {
+                    colorEstado = Decoracion.B_ROJO;
+                } else if (j.getAmarillas() > 0) {
+                    colorEstado = Decoracion.B_AMARILLO;
+                }
                 String colorMedia = (j.getMedia() >= 90) ? Decoracion.B_VERDE :
-                        (j.getMedia() >= 80) ? Decoracion.B_AMARILLO :
-                                (j.getMedia() >= 70) ? Decoracion.B_ROJO : Decoracion.BLANCO;
-
-                String mediaTexto = "MEDIA: " + j.getMedia();
+                        (j.getMedia() >= 80) ? Decoracion.B_AMARILLO : Decoracion.B_ROJO;
                 System.out.print(colorLiga + "│" + Decoracion.RESET);
-                System.out.printf("   " + colorLiga + "%-5s" + Decoracion.RESET +
-                                " %-26s " + colorMedia + "%-10s" + Decoracion.RESET +
-                                "         ",
-                        j.getPosicion(), j.getNombre(), mediaTexto);
+
+                System.out.printf("   " + colorLiga + "%-5s" + Decoracion.RESET, j.getPosicion());
+
+                System.out.printf(" " + colorEstado + "%-26s " + Decoracion.RESET, j.getNombre());
+
+                System.out.printf(colorMedia + "MEDIA: %-4d" + Decoracion.RESET + "        ", j.getMedia());
 
                 System.out.println(colorLiga + "│");
             }
