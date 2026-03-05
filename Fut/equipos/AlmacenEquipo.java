@@ -1,0 +1,176 @@
+package Fut.equipos;
+
+import Fut.Decoracion;
+import Fut.ligas.Liga;
+import Fut.personas.AlmacenJugador;
+import Fut.personas.Jugador;
+import java.util.ArrayList;
+import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.Scanner;
+
+public class AlmacenEquipo {
+
+    private List<Equipo> todosLosEquipos;
+    private List<Liga> ligas;
+
+    public AlmacenEquipo() {
+        this.todosLosEquipos = new ArrayList<>();
+        this.ligas = new ArrayList<>();
+        cargarEquiposDesdeTxt("src/Fut/almacen/Almacen.txt");
+    }
+
+    public void organizarEnLigas() {
+        ligas.clear();
+        for (Equipo e : todosLosEquipos) {
+            Liga ligaEncontrada = null;
+            for (Liga l : ligas) {
+                if (l.getNombre().equalsIgnoreCase(e.getNombreLiga())) {
+                    ligaEncontrada = l;
+                    break;
+                }
+            }
+
+            if (ligaEncontrada == null) {
+                ligaEncontrada = new Liga(e.getNombreLiga(), new ArrayList<>(), new ArrayList<>());
+                ligas.add(ligaEncontrada);
+            }
+            ligaEncontrada.agregarEquipo(e);
+        }
+    }
+
+    public List<Equipo> getEquipos() {
+        return todosLosEquipos;
+    }
+
+    public List<Liga> getLigas() {
+        return ligas;
+    }
+
+    public static void vincularJugadoresAEquipos(AlmacenEquipo alEquipo, AlmacenJugador alJugador) {
+        List<Jugador> todosLosJugadores = new ArrayList<>();
+        todosLosJugadores.addAll(alJugador.getPorteros());
+        todosLosJugadores.addAll(alJugador.getDefensas());
+        todosLosJugadores.addAll(alJugador.getMedios());
+        todosLosJugadores.addAll(alJugador.getDelanteros());
+
+        for (Equipo equipo : alEquipo.getEquipos()) {
+            equipo.getPlantilla().clear();
+
+            for (Jugador jugador : todosLosJugadores) {
+                if (jugador.getEquipo().trim().equalsIgnoreCase(equipo.getNombre().trim())) {
+                    equipo.añadirJugador(jugador);
+                }
+            }
+        }
+        alEquipo.organizarEnLigas();
+    }
+
+    public static void mostrarSubmenuEquipos(AlmacenEquipo alEquipo, Scanner sc, String ligaSeleccionada) {
+        int seleccion;
+        int ANCHO_INTERIOR = 43;
+        List<Equipo> listaFiltrada = new ArrayList<>();
+
+        String colorLiga;
+        switch (ligaSeleccionada.toUpperCase()) {
+            case "LALIGA":
+                colorLiga = Decoracion.B_ROJO;
+                break;
+            case "PREMIER LEAGUE":
+                colorLiga = Decoracion.B_AZUL;
+                break;
+            case "BUNDESLIGA":
+                colorLiga = Decoracion.B_AMARILLO;
+                break;
+            case "SERIE A":
+                colorLiga = Decoracion.B_VERDE;
+                break;
+            case "LIGUE 1":
+                colorLiga = Decoracion.B_PURPURA;
+                break;
+            default:
+                colorLiga = Decoracion.B_CIAN;
+                break;
+        }
+
+        for (Equipo e : alEquipo.getEquipos()) {
+            if (e.getNombreLiga().equalsIgnoreCase(ligaSeleccionada)) {
+                listaFiltrada.add(e);
+            }
+        }
+
+        if (listaFiltrada.isEmpty()) {
+            System.out.println("\n" + Decoracion.B_BLANCO + " ERROR: " + Decoracion.RESET +
+                    Decoracion.ROJO + " No hay equipos en la liga: " + ligaSeleccionada + Decoracion.RESET);
+            return;
+        }
+
+        do {
+            System.out.println("\n" + colorLiga + "╔" + "═".repeat(ANCHO_INTERIOR + 2) + "╗" + Decoracion.RESET);
+            System.out.println(colorLiga + "║ " + Decoracion.B_BLANCO +
+                    Decoracion.centrar(" LIGA: " + ligaSeleccionada.toUpperCase() + " ", ANCHO_INTERIOR) +
+                    Decoracion.RESET + colorLiga + " ║");
+            System.out.println(colorLiga + "╠" + "═".repeat(ANCHO_INTERIOR + 2) + "╣" + Decoracion.RESET);
+
+            for (int i = 0; i < listaFiltrada.size(); i++) {
+                String indice = String.format("[%02d]", (i + 1));
+                String nombreEquipo = listaFiltrada.get(i).getNombre();
+
+                System.out.printf(colorLiga + "║  " + Decoracion.B_AMARILLO + "%s" + Decoracion.RESET +
+                                " %-" + (ANCHO_INTERIOR - 6) + "s " + colorLiga + "║%n",
+                        indice, nombreEquipo);
+            }
+
+            System.out.println(colorLiga + "╠" + "═".repeat(ANCHO_INTERIOR + 2) + "╣" + Decoracion.RESET);
+            System.out.printf(colorLiga + "║  " + Decoracion.ROJO + "[00]" + Decoracion.RESET +
+                    " %-" + (ANCHO_INTERIOR - 6) + "s " + colorLiga + "║%n", "VOLVER AL MENÚ PRINCIPAL");
+            System.out.println(colorLiga + "╚" + "═".repeat(ANCHO_INTERIOR + 2) + "╝" + Decoracion.RESET);
+
+            System.out.print(Decoracion.B_AMARILLO + " -> Selecciona un equipo (o 0 para salir): " + Decoracion.RESET);
+
+            while (!sc.hasNextInt()) {
+                sc.next();
+                System.out.print(Decoracion.ROJO + "Entrada no válida. Intenta de nuevo: " + Decoracion.RESET);
+            }
+
+            seleccion = sc.nextInt();
+            sc.nextLine();
+        }while (seleccion != 0);
+    }
+
+    private void cargarEquiposDesdeTxt(String ruta) {
+        try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
+            String linea;
+
+            while ((linea = br.readLine()) != null) {
+                linea = linea.trim();
+
+                if (linea.startsWith("equipos.add")) {
+                    int inicioConstructor = linea.indexOf("new Equipo(") + 11;
+                    int finConstructor = linea.lastIndexOf(")");
+
+                    String datos = linea.substring(inicioConstructor, finConstructor);
+                    datos = datos.replace("\"", "");
+
+                    String[] partes = datos.split(",");
+
+                    if (partes.length >= 6) {
+                        String liga = partes[0].trim();
+                        String nombre = partes[1].trim();
+                        String ciudad = partes[2].trim();
+                        String estadio = partes[3].trim();
+                        String entrenador = partes[4].trim();
+
+                        String titulosStr = partes[5].replaceAll("[^0-9]", "").trim();
+                        int titulos = Integer.parseInt(titulosStr);
+
+                        todosLosEquipos.add(new Equipo(liga, nombre, ciudad, estadio, entrenador, titulos));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error procesando el archivo de equipos: " + e.getMessage());
+        }
+    }
+}
