@@ -18,21 +18,6 @@ public enum Posicion {
         this.abreviatura = abreviatura;
     }
 
-    public String getAbreviatura() {
-        return abreviatura;
-    }
-    public static Posicion desdeString(String nombre) {
-        try {
-            return Posicion.valueOf(nombre.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            switch (nombre.toUpperCase()) {
-                case "DEFENSA": return DEFENSA_CENTRAL;
-                case "CENTROCAMPISTA": return MEDIOCENTRO;
-                case "DELANTERO": return EXTREMO_IZQUIERDO;
-                default: throw new IllegalArgumentException("Posición no válida: " + nombre);
-            }
-        }
-    }
     @Override
     public String toString() {
         return abreviatura;

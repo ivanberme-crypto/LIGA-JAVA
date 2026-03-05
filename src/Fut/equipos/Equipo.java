@@ -21,7 +21,7 @@ public class Equipo {
     private int golesFavor = 0;
     private int golesContra = 0;
 
-    public Equipo(String liga, String nombre, String ciudad, String estadio, String entrenador, int titulos) {
+    protected Equipo(String liga, String nombre, String ciudad, String estadio, String entrenador, int titulos) {
         this.liga = liga;
         this.nombre = nombre;
         this.ciudad = ciudad;
@@ -63,8 +63,6 @@ public class Equipo {
     public String getNombre() { return nombre; }
     
     public void setNombre(String nombre) { this.nombre = nombre; }
-
-    public String getEntrenador() { return entrenador; }
 
     public List<Jugador> getPlantilla() { return plantilla; }
     
