@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>C:/Users/Hp/JAVA/SEGUNDO TRIMESTRE/LIGA-JAVA/src</OriginalElement>
+  <nodes>
+    <node x="-56.5" y="307.5">Fut.personas.Persona</node>
+    <node x="204.0" y="2299.5">Fut.equipos.EquipoPropio</node>
+    <node x="563.0" y="2179.5">Fut.Decoracion</node>
+    <node x="488.5" y="3297.0">Fut.Main</node>
+    <node x="757.0" y="1679.5">Fut.ligas.jornadas.Jornada</node>
+    <node x="751.5" y="1831.5">Fut.ligas.Liga</node>
+    <node x="-41.0" y="603.5">Fut.personas.Jugador</node>
+    <node x="119.5" y="199.5">Fut.enumLiga.Posicion</node>
+    <node x="830.0" y="2347.5">Fut.equipos.AlmacenEquipo</node>
+    <node x="283.5" y="3019.5">Fut.Menu</node>
+    <node x="850.5" y="1431.5">Fut.ligas.LigaTerminada</node>
+    <node x="-89.5" y="2311.5">Fut.personas.AlmacenJugador</node>
+    <node x="563.5" y="2783.5">Fut.ligas.AlmacenLiga</node>
+    <node x="356.0" y="963.5">Fut.equipos.Equipo</node>
+    <node x="596.5" y="1431.5">Fut.ligas.jornadas.Partido</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Fut.equipos.EquipoPropio" target="Fut.personas.Jugador" relationship="TO_MANY">
+      <point x="-64.0" y="-91.5" />
+      <point x="268.0" y="2251.0" />
+      <point x="272.0" y="2251.0" />
+      <point x="272.0" y="911.0" />
+      <point x="972.0" y="911.0" />
+      <point x="972.0" y="571.0" />
+      <point x="98.5" y="571.0" />
+      <point x="46.5" y="-127.5" />
+    </edge>
+    <edge source="Fut.Menu" target="Fut.equipos.EquipoPropio" relationship="CREATE">
+      <point x="-54.25" y="-91.5" />
+      <point x="337.75" y="2991.0" />
+      <point x="332.0" y="2991.0" />
+      <point x="0.0" y="91.5" />
+    </edge>
+    <edge source="Fut.Menu" target="Fut.equipos.AlmacenEquipo" relationship="TO_ONE">
+      <point x="54.25" y="-91.5" />
+      <point x="446.25" y="2991.0" />
+      <point x="452.0" y="2991.0" />
+      <point x="452.0" y="2951.0" />
+      <point x="852.0" y="2951.0" />
+      <point x="852.0" y="2831.0" />
+      <point x="1092.0" y="2831.0" />
+      <point x="1092.0" y="2111.0" />
+      <point x="891.0" y="2111.0" />
+      <point x="-61.0" y="-43.5" />
+    </edge>
+    <edge source="Fut.equipos.AlmacenEquipo" target="Fut.ligas.Liga" relationship="CREATE">
+      <point x="61.0" y="-43.5" />
+      <point x="1013.0" y="2311.0" />
+      <point x="1012.0" y="2311.0" />
+      <point x="1012.0" y="2071.0" />
+      <point x="1112.0" y="2071.0" />
+      <point x="1112.0" y="1811.0" />
+      <point x="852.0" y="1811.0" />
+      <point x="0.0" y="-79.5" />
+    </edge>
+    <edge source="Fut.ligas.Liga" target="Fut.ligas.jornadas.Partido" relationship="CREATE">
+      <point x="0.0" y="-79.5" />
+      <point x="852.0" y="1771.0" />
+      <point x="692.0" y="1771.0" />
+      <point x="0.0" y="79.5" />
+    </edge>
+    <edge source="Fut.ligas.Liga" target="Fut.ligas.jornadas.Jornada" relationship="TO_MANY">
+      <point x="0.0" y="79.5" />
+      <point x="852.0" y="2011.0" />
+      <point x="572.0" y="2011.0" />
+      <point x="572.0" y="1811.0" />
+      <point x="732.0" y="1811.0" />
+      <point x="732.0" y="1651.0" />
+      <point x="852.0" y="1651.0" />
+      <point x="0.0" y="-31.5" />
+    </edge>
+    <edge source="Fut.ligas.LigaTerminada" target="Fut.personas.Jugador" relationship="TO_MANY">
+      <point x="0.0" y="-79.5" />
+      <point x="972.0" y="571.0" />
+      <point x="98.5" y="571.0" />
+      <point x="46.5" y="-127.5" />
+    </edge>
+    <edge source="Fut.ligas.LigaTerminada" target="Fut.equipos.Equipo" relationship="TO_MANY">
+      <point x="0.0" y="-79.5" />
+      <point x="972.0" y="1371.0" />
+      <point x="572.0" y="1371.0" />
+      <point x="572.0" y="931.0" />
+      <point x="452.0" y="931.0" />
+      <point x="0.0" y="-187.5" />
+    </edge>
+    <edge source="Fut.ligas.Liga" target="Fut.ligas.LigaTerminada" relationship="CREATE">
+      <point x="0.0" y="-79.5" />
+      <point x="852.0" y="1771.0" />
+      <point x="972.0" y="1771.0" />
+      <point x="0.0" y="79.5" />
+    </edge>
+    <edge source="Fut.ligas.AlmacenLiga" target="Fut.ligas.Liga" relationship="CREATE">
+      <point x="54.25" y="-67.5" />
+      <point x="726.25" y="2691.0" />
+      <point x="1132.0" y="2691.0" />
+      <point x="1132.0" y="2091.0" />
+      <point x="1112.0" y="2091.0" />
+      <point x="1112.0" y="1811.0" />
+      <point x="852.0" y="1811.0" />
+      <point x="0.0" y="-79.5" />
+    </edge>
+    <edge source="Fut.ligas.jornadas.Partido" target="Fut.equipos.Equipo" relationship="TO_ONE">
+      <point x="0.0" y="-79.5" />
+      <point x="692.0" y="1411.0" />
+      <point x="572.0" y="1411.0" />
+      <point x="572.0" y="931.0" />
+      <point x="452.0" y="931.0" />
+      <point x="0.0" y="-187.5" />
+    </edge>
+    <edge source="Fut.ligas.Liga" target="Fut.equipos.Equipo" relationship="TO_MANY">
+      <point x="0.0" y="79.5" />
+      <point x="852.0" y="2011.0" />
+      <point x="572.0" y="2011.0" />
+      <point x="572.0" y="931.0" />
+      <point x="452.0" y="931.0" />
+      <point x="0.0" y="-187.5" />
+    </edge>
+    <edge source="Fut.personas.AlmacenJugador" target="Fut.personas.Jugador" relationship="CREATE">
+      <point x="-60.75" y="-79.5" />
+      <point x="-28.75" y="2271.0" />
+      <point x="52.0" y="2271.0" />
+      <point x="0.0" y="127.5" />
+    </edge>
+    <edge source="Fut.equipos.Equipo" target="Fut.personas.Jugador" relationship="TO_MANY">
+      <point x="0.0" y="-187.5" />
+      <point x="452.0" y="911.0" />
+      <point x="972.0" y="911.0" />
+      <point x="972.0" y="571.0" />
+      <point x="98.5" y="571.0" />
+      <point x="46.5" y="-127.5" />
+    </edge>
+    <edge source="Fut.ligas.AlmacenLiga" target="Fut.equipos.EquipoPropio" relationship="TO_ONE">
+      <point x="-54.25" y="-67.5" />
+      <point x="617.75" y="2751.0" />
+      <point x="532.0" y="2751.0" />
+      <point x="532.0" y="2671.0" />
+      <point x="492.0" y="2671.0" />
+      <point x="492.0" y="2271.0" />
+      <point x="268.0" y="2271.0" />
+      <point x="-64.0" y="-91.5" />
+    </edge>
+    <edge source="Fut.equipos.EquipoPropio" target="Fut.equipos.Equipo" relationship="GENERALIZATION">
+      <point x="64.0" y="-91.5" />
+      <point x="396.0" y="2251.0" />
+      <point x="392.0" y="2251.0" />
+      <point x="392.0" y="1491.0" />
+      <point x="404.0" y="1491.0" />
+      <point x="-48.0" y="187.5" />
+    </edge>
+    <edge source="Fut.Menu" target="Fut.ligas.AlmacenLiga" relationship="TO_ONE">
+      <point x="54.25" y="-91.5" />
+      <point x="446.25" y="2991.0" />
+      <point x="452.0" y="2991.0" />
+      <point x="452.0" y="2951.0" />
+      <point x="812.0" y="2951.0" />
+      <point x="812.0" y="2731.0" />
+      <point x="617.75" y="2731.0" />
+      <point x="-54.25" y="-67.5" />
+    </edge>
+    <edge source="Fut.ligas.AlmacenLiga" target="Fut.personas.AlmacenJugador" relationship="TO_ONE">
+      <point x="-54.25" y="-67.5" />
+      <point x="617.75" y="2751.0" />
+      <point x="532.0" y="2751.0" />
+      <point x="532.0" y="2691.0" />
+      <point x="452.0" y="2691.0" />
+      <point x="452.0" y="2511.0" />
+      <point x="172.0" y="2511.0" />
+      <point x="172.0" y="2291.0" />
+      <point x="92.75" y="2291.0" />
+      <point x="60.75" y="-79.5" />
+    </edge>
+    <edge source="Fut.equipos.AlmacenEquipo" target="Fut.equipos.Equipo" relationship="TO_MANY">
+      <point x="-61.0" y="-43.5" />
+      <point x="891.0" y="2151.0" />
+      <point x="572.0" y="2151.0" />
+      <point x="572.0" y="2131.0" />
+      <point x="492.0" y="2131.0" />
+      <point x="492.0" y="1411.0" />
+      <point x="572.0" y="1411.0" />
+      <point x="572.0" y="931.0" />
+      <point x="452.0" y="931.0" />
+      <point x="0.0" y="-187.5" />
+    </edge>
+    <edge source="Fut.Menu" target="Fut.personas.AlmacenJugador" relationship="CREATE">
+      <point x="-54.25" y="-91.5" />
+      <point x="337.75" y="2991.0" />
+      <point x="332.0" y="2991.0" />
+      <point x="332.0" y="2871.0" />
+      <point x="292.0" y="2871.0" />
+      <point x="292.0" y="2831.0" />
+      <point x="-108.0" y="2831.0" />
+      <point x="-108.0" y="2291.0" />
+      <point x="-28.75" y="2291.0" />
+      <point x="-60.75" y="-79.5" />
+    </edge>
+    <edge source="Fut.ligas.AlmacenLiga" target="Fut.equipos.AlmacenEquipo" relationship="TO_ONE">
+      <point x="-54.25" y="-67.5" />
+      <point x="617.75" y="2751.0" />
+      <point x="532.0" y="2751.0" />
+      <point x="532.0" y="2651.0" />
+      <point x="1092.0" y="2651.0" />
+      <point x="1092.0" y="2111.0" />
+      <point x="891.0" y="2111.0" />
+      <point x="-61.0" y="-43.5" />
+    </edge>
+    <edge source="Fut.personas.Jugador" target="Fut.personas.Persona" relationship="GENERALIZATION">
+      <point x="-46.5" y="-127.5" />
+      <point x="5.5" y="571.0" />
+      <point x="12.0" y="571.0" />
+      <point x="0.0" y="43.5" />
+    </edge>
+    <edge source="Fut.ligas.Liga" target="Fut.equipos.AlmacenEquipo" relationship="TO_ONE">
+      <point x="0.0" y="79.5" />
+      <point x="852.0" y="2091.0" />
+      <point x="891.0" y="2091.0" />
+      <point x="-61.0" y="-43.5" />
+    </edge>
+    <edge source="Fut.equipos.AlmacenEquipo" target="Fut.ligas.Liga" relationship="TO_MANY">
+      <point x="-61.0" y="-43.5" />
+      <point x="891.0" y="2151.0" />
+      <point x="572.0" y="2151.0" />
+      <point x="572.0" y="2071.0" />
+      <point x="532.0" y="2071.0" />
+      <point x="532.0" y="2031.0" />
+      <point x="852.0" y="2031.0" />
+      <point x="0.0" y="79.5" />
+    </edge>
+    <edge source="Fut.Menu" target="Fut.ligas.AlmacenLiga" relationship="CREATE">
+      <point x="-54.25" y="-91.5" />
+      <point x="337.75" y="2991.0" />
+      <point x="332.0" y="2991.0" />
+      <point x="332.0" y="2871.0" />
+      <point x="532.0" y="2871.0" />
+      <point x="532.0" y="2711.0" />
+      <point x="726.25" y="2711.0" />
+      <point x="54.25" y="-67.5" />
+    </edge>
+    <edge source="Fut.ligas.jornadas.Jornada" target="Fut.ligas.jornadas.Partido" relationship="TO_MANY">
+      <point x="0.0" y="-31.5" />
+      <point x="852.0" y="1631.0" />
+      <point x="832.0" y="1631.0" />
+      <point x="832.0" y="1391.0" />
+      <point x="692.0" y="1391.0" />
+      <point x="0.0" y="-79.5" />
+    </edge>
+    <edge source="Fut.personas.Jugador" target="Fut.enumLiga.Posicion" relationship="TO_ONE">
+      <point x="46.5" y="-127.5" />
+      <point x="98.5" y="551.0" />
+      <point x="232.0" y="551.0" />
+      <point x="0.0" y="151.5" />
+    </edge>
+    <edge source="Fut.Main" target="Fut.Menu" relationship="CREATE">
+      <point x="0.0" y="-14.0" />
+      <point x="532.0" y="2971.0" />
+      <point x="337.75" y="2971.0" />
+      <point x="-54.25" y="-91.5" />
+    </edge>
+    <edge source="Fut.Menu" target="Fut.personas.AlmacenJugador" relationship="TO_ONE">
+      <point x="54.25" y="-91.5" />
+      <point x="446.25" y="2991.0" />
+      <point x="452.0" y="2991.0" />
+      <point x="452.0" y="2511.0" />
+      <point x="172.0" y="2511.0" />
+      <point x="172.0" y="2291.0" />
+      <point x="92.75" y="2291.0" />
+      <point x="60.75" y="-79.5" />
+    </edge>
+    <edge source="Fut.ligas.AlmacenLiga" target="Fut.ligas.Liga" relationship="TO_ONE">
+      <point x="-54.25" y="-67.5" />
+      <point x="617.75" y="2751.0" />
+      <point x="532.0" y="2751.0" />
+      <point x="532.0" y="2031.0" />
+      <point x="852.0" y="2031.0" />
+      <point x="0.0" y="79.5" />
+    </edge>
+    <edge source="Fut.ligas.Liga" target="Fut.ligas.jornadas.Jornada" relationship="CREATE">
+      <point x="0.0" y="-79.5" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="Fut.equipos.AlmacenEquipo" target="Fut.equipos.Equipo" relationship="CREATE">
+      <point x="61.0" y="-43.5" />
+      <point x="1013.0" y="2311.0" />
+      <point x="1012.0" y="2311.0" />
+      <point x="1012.0" y="2051.0" />
+      <point x="532.0" y="2051.0" />
+      <point x="532.0" y="1391.0" />
+      <point x="500.0" y="1391.0" />
+      <point x="48.0" y="187.5" />
+    </edge>
+    <edge source="Fut.Menu" target="Fut.equipos.AlmacenEquipo" relationship="CREATE">
+      <point x="-54.25" y="-91.5" />
+      <point x="337.75" y="2991.0" />
+      <point x="332.0" y="2991.0" />
+      <point x="332.0" y="2871.0" />
+      <point x="372.0" y="2871.0" />
+      <point x="372.0" y="2631.0" />
+      <point x="812.0" y="2631.0" />
+      <point x="812.0" y="2131.0" />
+      <point x="1013.0" y="2131.0" />
+      <point x="61.0" y="-43.5" />
+    </edge>
+    <edge source="Fut.personas.AlmacenJugador" target="Fut.personas.Jugador" relationship="TO_MANY">
+      <point x="60.75" y="-79.5" />
+      <point x="92.75" y="2271.0" />
+      <point x="92.0" y="2271.0" />
+      <point x="92.0" y="911.0" />
+      <point x="972.0" y="911.0" />
+      <point x="972.0" y="571.0" />
+      <point x="98.5" y="571.0" />
+      <point x="46.5" y="-127.5" />
+    </edge>
+    <edge source="Fut.Menu" target="Fut.equipos.EquipoPropio" relationship="TO_ONE">
+      <point x="54.25" y="-91.5" />
+      <point x="446.25" y="2991.0" />
+      <point x="452.0" y="2991.0" />
+      <point x="452.0" y="2951.0" />
+      <point x="492.0" y="2951.0" />
+      <point x="492.0" y="2271.0" />
+      <point x="268.0" y="2271.0" />
+      <point x="-64.0" y="-91.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Compact" zoom="0.3595835982199619" showDependencies="true" x="854.2419337016579" y="980.7199999999999" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

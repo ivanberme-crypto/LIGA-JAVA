@@ -48,7 +48,7 @@ El proyecto está organizado en varios paquetes para separar responsabilidades:
 
 PARA EJECUTARLO
 1. - O bien poner este comando en la terminal de IntelliJ: git clone https://github.com/ivanberme-crypto/LIGA-JAVA.git
-   - O descargar el archivo LIGA-JAVA-ProyectoIntermodular_JavierClemente_JavierVega_IvanBermejo.zip
+   - O descargar el archivo Fut.zip
 2. Ejecutar la clase Main para que te lleve al menu principal y disfrutar del FutDraft.
 
 ARCHIVO DE DATOS
