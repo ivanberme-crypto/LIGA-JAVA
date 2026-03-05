@@ -56,7 +56,6 @@ public class AlmacenEquipo {
 
         for (Equipo equipo : alEquipo.getEquipos()) {
             equipo.getPlantilla().clear();
-
             for (Jugador jugador : todosLosJugadores) {
                 if (jugador.getEquipo().trim().equalsIgnoreCase(equipo.getNombre().trim())) {
                     equipo.añadirJugador(jugador);
@@ -74,13 +73,13 @@ public class AlmacenEquipo {
         String colorLiga;
         switch (ligaSeleccionada.toUpperCase()) {
             case "LALIGA":
-                colorLiga = Decoracion.B_ROJO;
+                colorLiga = Decoracion.ROJO_ANARANJADO;
                 break;
             case "PREMIER LEAGUE":
                 colorLiga = Decoracion.B_AZUL;
                 break;
             case "BUNDESLIGA":
-                colorLiga = Decoracion.B_AMARILLO;
+                colorLiga = Decoracion.B_ROJO;
                 break;
             case "SERIE A":
                 colorLiga = Decoracion.B_VERDE;

@@ -67,6 +67,7 @@ public final class Partido {
                 }
             }
         }
+        Decoracion.pausa(100);
         simularTarjetas(equipoLocal);
         simularTarjetas(equipoVisitante);
     }
